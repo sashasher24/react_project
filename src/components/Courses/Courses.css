@@ -1,0 +1,10 @@
+.main_couses_section {
+    padding: 10px 20px;
+}
+
+.main_couses_section-header {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 5px;
+    align-items: center;
+}

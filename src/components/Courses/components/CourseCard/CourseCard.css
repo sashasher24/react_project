@@ -1,0 +1,36 @@
+.course_card {
+    display: flex;
+    justify-content: space-between;
+    border: 1px solid darkred;
+    margin: 10px 0;
+    padding: 20px;
+}
+
+.course_card_main_info {
+    padding: 0 20px;
+    width: 100%;
+}
+
+.course_card_title {
+    font-weight: bold;
+    font-size: 30px;
+    margin-bottom: 20px;
+}
+
+.course_card_description {
+    margin-right: 100px;
+}
+
+.course_card_details {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+}
+
+.course_card_details p {
+    margin-top: 0;
+}
+
+.course_card_details_name {
+    font-weight: bold;
+}

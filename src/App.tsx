@@ -1,26 +1,49 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
+import Header from './components/Header/Header';
+import Courses from './components/Courses/Courses';
+import { mockedCoursesList } from './constants';
+import CreateCourse from './components/CreateCourse/CreateCourse';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+	const [isCreateCourse, setIsCreateCourse] = useState(false);
+	const [filterValue, setFilterValue] = useState('');
+	const [filteredCourses, setFilteredCourses] = useState([]);
+
+	const openCreateMode = () => {
+		setIsCreateCourse(true);
+	};
+
+	const filterCourses = (value) => {
+		let filtered = mockedCoursesList;
+		const regex = new RegExp(value, 'i');
+		filtered = filtered.filter(
+			(course) => regex.test(course.title) || regex.test(course.id)
+		);
+		console.log(filtered);
+		setFilteredCourses(filtered);
+	};
+
+	return (
+		<>
+			<Header />
+			<main>
+				{isCreateCourse ? (
+					<CreateCourse />
+				) : (
+					<Courses
+						courses={
+							filteredCourses.length > 0 ? filteredCourses : mockedCoursesList
+						}
+						createCourseSwitch={openCreateMode}
+						filterCourses={filterCourses}
+						filterValue={filterValue}
+						setFilterValue={setFilterValue}
+					/>
+				)}
+			</main>
+		</>
+	);
 }
 
 export default App;

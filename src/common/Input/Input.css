@@ -1,0 +1,39 @@
+/*.text_input_small {*/
+/*    border: 1px solid orange;*/
+/*    margin: 10px 10px 10px 0;*/
+/*    padding: 5px;*/
+/*}*/
+
+/*.text_input_small:focus {*/
+/*    outline: 1.5px solid orange;*/
+/*}*/
+
+.search_bar_input, .create_course_title_input {
+    border: 1px solid orange;
+    margin: 10px 10px 10px 0;
+    padding: 5px;
+    width: 500px;
+    height: 25px;
+}
+
+.search_bar_input:focus, .create_course_title_input:focus {
+    outline: 1.5px solid orange;
+}
+
+.input {
+    display: flex;
+    flex-direction: column;
+}
+
+.create_course_description_input {
+    border: 1px solid yellow;
+    margin-top: 10px;
+}
+
+.enter_author_name_input, .enter_duration_input {
+    border: 1px solid orange;
+    margin: 10px 10px 10px 0;
+    padding: 5px;
+    width: 750px;
+    height: 25px;
+}
