@@ -9,6 +9,7 @@ function App() {
 	const [isCreateCourse, setIsCreateCourse] = useState(false);
 	const [filterValue, setFilterValue] = useState('');
 	const [filteredCourses, setFilteredCourses] = useState([]);
+	const [courses, setCourses] = useState(mockedCoursesList);
 
 	const openCreateMode = () => {
 		setIsCreateCourse(true);
@@ -29,12 +30,14 @@ function App() {
 			<Header />
 			<main>
 				{isCreateCourse ? (
-					<CreateCourse />
+					<CreateCourse
+						setIsCreateCourse={setIsCreateCourse}
+						setCourses={setCourses}
+						courses={courses}
+					/>
 				) : (
 					<Courses
-						courses={
-							filteredCourses.length > 0 ? filteredCourses : mockedCoursesList
-						}
+						courses={filteredCourses.length > 0 ? filteredCourses : courses}
 						createCourseSwitch={openCreateMode}
 						filterCourses={filterCourses}
 						filterValue={filterValue}
