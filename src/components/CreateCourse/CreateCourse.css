@@ -13,7 +13,6 @@
 .create_course_main_info {
     display: flex;
     justify-content: space-between;
-    /*flex-direction: row;*/
 }
 
 .create_course_left_info_block {
