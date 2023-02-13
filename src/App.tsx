@@ -7,6 +7,7 @@ import CreateCourse from './components/CreateCourse/CreateCourse';
 
 function App() {
 	const [isCreateCourse, setIsCreateCourse] = useState(false);
+	const [isFiltered, setIsFiltered] = useState(false);
 	const [filterValue, setFilterValue] = useState('');
 	const [filteredCourses, setFilteredCourses] = useState([]);
 	const [courses, setCourses] = useState(mockedCoursesList);
@@ -16,12 +17,16 @@ function App() {
 	};
 
 	const filterCourses = (value) => {
-		let filtered = mockedCoursesList;
+		let filtered = courses;
+		setIsFiltered(true);
+		if (value === '') {
+			setIsFiltered(false);
+			return;
+		}
 		const regex = new RegExp(value, 'i');
 		filtered = filtered.filter(
 			(course) => regex.test(course.title) || regex.test(course.id)
 		);
-		console.log(filtered);
 		setFilteredCourses(filtered);
 	};
 
@@ -37,7 +42,7 @@ function App() {
 					/>
 				) : (
 					<Courses
-						courses={filteredCourses.length > 0 ? filteredCourses : courses}
+						courses={isFiltered ? filteredCourses : courses}
 						createCourseSwitch={openCreateMode}
 						filterCourses={filterCourses}
 						filterValue={filterValue}

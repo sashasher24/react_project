@@ -3,6 +3,7 @@ import React from 'react';
 import './CourseCard.css';
 import Button from '../../../../common/Button/Button';
 import { getAuthors } from '../../../../helpers/getAuthors';
+import { getCourseDuration } from '../../../../helpers/getCourseDuration';
 
 export interface CourseCardProps {
 	id?: string;
@@ -30,7 +31,7 @@ const CourseCard: React.FC<CourseCard> = ({ card }) => {
 				</p>
 				<p>
 					<span className='course_card_details_name'>Duration: </span>
-					{card.duration}
+					{getCourseDuration(card.duration)}
 				</p>
 				<p>
 					<span className='course_card_details_name'>Creation: </span>
