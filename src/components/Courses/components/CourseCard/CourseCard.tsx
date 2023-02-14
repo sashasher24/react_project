@@ -4,6 +4,7 @@ import './CourseCard.css';
 import Button from '../../../../common/Button/Button';
 import { getAuthors } from '../../../../helpers/getAuthors';
 import { getCourseDuration } from '../../../../helpers/getCourseDuration';
+import {Author} from "../../../CreateCourse/components/AuthorsList/AuthorsList";
 
 export interface CourseCardProps {
 	id?: string;
@@ -16,8 +17,9 @@ export interface CourseCardProps {
 
 interface CourseCard {
 	card: CourseCardProps;
+	authors: Author[];
 }
-const CourseCard: React.FC<CourseCard> = ({ card }) => {
+const CourseCard: React.FC<CourseCard> = ({ card, authors }) => {
 	return (
 		<div className='course_card'>
 			<div className='course_card_main_info'>
@@ -27,7 +29,7 @@ const CourseCard: React.FC<CourseCard> = ({ card }) => {
 			<div className='course_card_details'>
 				<p>
 					<span className='course_card_details_name'>Authors: </span>
-					{getAuthors(card.authors)}
+					{getAuthors(card.authors, authors)}
 				</p>
 				<p>
 					<span className='course_card_details_name'>Duration: </span>

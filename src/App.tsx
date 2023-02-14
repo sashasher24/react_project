@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './App.css';
 import Header from './components/Header/Header';
 import Courses from './components/Courses/Courses';
-import { mockedCoursesList } from './constants';
+import { mockedAuthorsList, mockedCoursesList } from './constants';
 import CreateCourse from './components/CreateCourse/CreateCourse';
 
 function App() {
@@ -11,6 +11,7 @@ function App() {
 	const [filterValue, setFilterValue] = useState('');
 	const [filteredCourses, setFilteredCourses] = useState([]);
 	const [courses, setCourses] = useState(mockedCoursesList);
+	const [authors, setAuthors] = useState(mockedAuthorsList);
 
 	const openCreateMode = () => {
 		setIsCreateCourse(true);
@@ -39,6 +40,8 @@ function App() {
 						setIsCreateCourse={setIsCreateCourse}
 						setCourses={setCourses}
 						courses={courses}
+						authors={authors}
+						setAuthors={setAuthors}
 					/>
 				) : (
 					<Courses
@@ -47,6 +50,7 @@ function App() {
 						filterCourses={filterCourses}
 						filterValue={filterValue}
 						setFilterValue={setFilterValue}
+						authors={authors}
 					/>
 				)}
 			</main>

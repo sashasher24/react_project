@@ -5,8 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 import './CreateCourse.css';
 import { getCourseDuration } from '../../helpers/getCourseDuration';
-import { mockedAuthorsList } from '../../constants';
-import AuthorsList from './components/AuthorsList/AuthorsList';
+import AuthorsList, { Author } from './components/AuthorsList/AuthorsList';
 import CourseAuthorsList from './components/CourseAuthorsList/CourseAuthorsList';
 import { CourseCardProps } from '../Courses/components/CourseCard/CourseCard';
 import { formatCreationDate } from '../../helpers/formatCreationDate';
@@ -15,9 +14,10 @@ interface CreateCourseProps {
 	setIsCreateCourse: Dispatch<SetStateAction<boolean>>;
 	setCourses: Dispatch<SetStateAction<CourseCardProps[]>>;
 	courses: CourseCardProps[];
+	authors: Author[];
+	setAuthors: Dispatch<SetStateAction<Author[]>>;
 }
 const CreateCourse: React.FC<CreateCourseProps> = (props) => {
-	const [authors, setAuthors] = useState(mockedAuthorsList);
 	const [name, setName] = useState('');
 	const [courseAuthors, setCourseAuthors] = useState([]);
 	const [duration, setDuration] = useState(0);
@@ -33,7 +33,7 @@ const CreateCourse: React.FC<CreateCourseProps> = (props) => {
 			description: courseDescription,
 			creationDate: formatCreationDate(new Date()),
 			duration: duration,
-			authors: courseAuthors,
+			authors: courseAuthors.map((author) => author.id),
 		});
 		props.setCourses(newCourses);
 		props.setIsCreateCourse(false);
@@ -42,9 +42,9 @@ const CreateCourse: React.FC<CreateCourseProps> = (props) => {
 	console.log(`courseAuthors - ${courseAuthors}`);
 
 	const addAuthors = (newName) => {
-		const newAuthors = [...authors];
+		const newAuthors = [...props.authors];
 		if (newName.length >= 2) newAuthors.push({ id: uuidv4(), name: newName });
-		setAuthors(newAuthors);
+		props.setAuthors(newAuthors);
 	};
 
 	return (
@@ -114,7 +114,7 @@ const CreateCourse: React.FC<CreateCourseProps> = (props) => {
 					</div>
 					<div className='create_course_right_info_block'>
 						<AuthorsList
-							authors={authors}
+							authors={props.authors}
 							setCourseAuthors={setCourseAuthors}
 							courseAuthors={courseAuthors}
 						/>

@@ -1,21 +1,23 @@
 import React, { Dispatch, SetStateAction } from 'react';
 import AuthorItem from '../AuthorItem/AuthorItem';
 
-interface Author {
+export interface Author {
 	id: string;
 	name: string;
 }
 
 interface AuthorsListProps {
 	authors: Author[];
-	courseAuthors: string[];
+	courseAuthors: Author[];
 	setCourseAuthors: Dispatch<SetStateAction<any[]>>;
 }
 const AuthorsList: React.FC<AuthorsListProps> = (props) => {
-	const addAuthor = (author) => {
-		const newAuthors = new Set(props.courseAuthors);
-		newAuthors.add(author);
-		props.setCourseAuthors([...newAuthors]);
+	const addCourseAuthor = (author: Author) => {
+		const newAuthors = [...props.courseAuthors];
+		newAuthors.indexOf(author) === -1
+			? newAuthors.push(author)
+			: console.log('This author already exists');
+		props.setCourseAuthors(newAuthors);
 	};
 
 	return (
@@ -26,7 +28,7 @@ const AuthorsList: React.FC<AuthorsListProps> = (props) => {
 					<AuthorItem
 						name={author.name}
 						buttonText='Add author'
-						onClick={() => addAuthor(author.name)}
+						onClick={() => addCourseAuthor(author)}
 					/>
 				))}
 			</div>

@@ -1,8 +1,9 @@
 import React, { Dispatch, SetStateAction } from 'react';
 import AuthorItem from '../AuthorItem/AuthorItem';
+import { Author } from '../AuthorsList/AuthorsList';
 
 interface CourseAuthorsListProps {
-	authors: string[];
+	authors: Author[];
 	setCourseAuthors: Dispatch<SetStateAction<any[]>>;
 }
 const CourseAuthorsList: React.FC<CourseAuthorsListProps> = (props) => {
@@ -23,7 +24,7 @@ const CourseAuthorsList: React.FC<CourseAuthorsListProps> = (props) => {
 			{props.authors?.length ? (
 				props.authors.map((author) => (
 					<AuthorItem
-						name={author}
+						name={author.name}
 						buttonText='Delete author'
 						onClick={() => deleteAuthor(author)}
 					/>
