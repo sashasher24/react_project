@@ -1,4 +1,3 @@
-import { mockedAuthorsList } from '../constants';
 import { Author } from '../components/CreateCourse/components/AuthorsList/AuthorsList';
 
 export const getAuthors = (ids: string[], source: Author[]) => {

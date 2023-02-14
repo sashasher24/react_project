@@ -11,7 +11,7 @@ import { Author } from '../CreateCourse/components/AuthorsList/AuthorsList';
 interface CoursesProps {
 	courses: CourseCardProps[];
 	createCourseSwitch: React.MouseEventHandler<HTMLButtonElement>;
-	filterCourses: (value: any) => void;
+	filterCourses: (value: string) => void;
 	filterValue: string;
 	setFilterValue: Dispatch<SetStateAction<string>>;
 	authors: Author[];

@@ -13,6 +13,7 @@ interface InputProps {
 		| ChangeEventHandler<HTMLTextAreaElement>;
 	minLength?: number;
 	required?: boolean;
+	value?: string;
 }
 const Input: React.FC<InputProps> = ({
 	labelText,
@@ -23,6 +24,7 @@ const Input: React.FC<InputProps> = ({
 	onChange,
 	minLength,
 	required,
+	value,
 }) => {
 	return (
 		<div className='input'>
@@ -49,6 +51,7 @@ const Input: React.FC<InputProps> = ({
 					minLength={minLength ? minLength : 1}
 					onChange={onChange}
 					required={required}
+					value={value ? value : ''}
 				/>
 			)}
 		</div>

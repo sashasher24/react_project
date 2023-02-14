@@ -5,7 +5,7 @@ import Button from '../../../../common/Button/Button';
 import './SearchBar.css';
 
 interface SearchBarProps {
-	filterCourses: (value: any) => void;
+	filterCourses: (value: string) => void;
 	filterValue: string;
 	setFilterValue: Dispatch<SetStateAction<string>>;
 }

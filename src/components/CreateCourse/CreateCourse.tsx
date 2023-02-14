@@ -45,6 +45,7 @@ const CreateCourse: React.FC<CreateCourseProps> = (props) => {
 		const newAuthors = [...props.authors];
 		if (newName.length >= 2) newAuthors.push({ id: uuidv4(), name: newName });
 		props.setAuthors(newAuthors);
+		setName('');
 	};
 
 	return (
@@ -90,6 +91,7 @@ const CreateCourse: React.FC<CreateCourseProps> = (props) => {
 								id='enter_author_name_input'
 								minLength={2}
 								onChange={(e) => setName(e.target.value)}
+								value={name}
 							/>
 							<Button
 								buttonText='Create author'
