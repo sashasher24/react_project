@@ -64,6 +64,7 @@ const CreateCourse: React.FC<CreateCourseProps> = (props) => {
 						buttonText='Create course'
 						class='create_course_button'
 						onClick={createCourse}
+						type='submit'
 					/>
 				</div>
 				<div className='create_course_description block'>
