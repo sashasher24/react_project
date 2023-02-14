@@ -4,7 +4,7 @@ import './CourseCard.css';
 import Button from '../../../../common/Button/Button';
 import { getAuthors } from '../../../../helpers/getAuthors';
 import { getCourseDuration } from '../../../../helpers/getCourseDuration';
-import {Author} from "../../../CreateCourse/components/AuthorsList/AuthorsList";
+import { Author } from '../../../CreateCourse/components/AuthorsList/AuthorsList';
 
 export interface CourseCardProps {
 	id?: string;

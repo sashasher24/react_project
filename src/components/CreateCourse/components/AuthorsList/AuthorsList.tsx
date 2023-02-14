@@ -13,11 +13,9 @@ interface AuthorsListProps {
 }
 const AuthorsList: React.FC<AuthorsListProps> = (props) => {
 	const addCourseAuthor = (author: Author) => {
-		const newAuthors = [...props.courseAuthors];
-		newAuthors.indexOf(author) === -1
-			? newAuthors.push(author)
-			: console.log('This author already exists');
-		props.setCourseAuthors(newAuthors);
+		const newAuthors = new Set(props.courseAuthors);
+		newAuthors.add(author);
+		props.setCourseAuthors([...newAuthors]);
 	};
 
 	return (

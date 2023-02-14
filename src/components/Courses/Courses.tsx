@@ -6,7 +6,7 @@ import SearchBar from './components/SearchBar/SearchBar';
 
 import './Courses.css';
 import Button from '../../common/Button/Button';
-import {Author} from "../CreateCourse/components/AuthorsList/AuthorsList";
+import { Author } from '../CreateCourse/components/AuthorsList/AuthorsList';
 
 interface CoursesProps {
 	courses: CourseCardProps[];
@@ -33,7 +33,7 @@ const Courses: React.FC<CoursesProps> = (props) => {
 			</div>
 			<div className='main_couses_section-courses'>
 				{props.courses.map((course) => (
-					<CourseCard card={course} authors={props.authors}/>
+					<CourseCard card={course} authors={props.authors} />
 				))}
 			</div>
 		</div>
