@@ -8,14 +8,10 @@ interface CourseAuthorsListProps {
 }
 const CourseAuthorsList: React.FC<CourseAuthorsListProps> = (props) => {
 	const deleteAuthor = (author) => {
-		console.log(`author - ${author}`);
 		const authors = [...props.authors];
-		console.log(authors);
 		const index = authors.indexOf(author);
-
-		const newAuthors = authors.splice(index, 1);
-		props.setCourseAuthors(newAuthors);
-		console.log(`newAuthors ${newAuthors}`);
+		authors.splice(index, 1);
+		props.setCourseAuthors(authors);
 	};
 
 	return (

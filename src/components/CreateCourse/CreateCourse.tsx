@@ -39,13 +39,20 @@ const CreateCourse: React.FC<CreateCourseProps> = (props) => {
 		props.setIsCreateCourse(false);
 	};
 
-	console.log(`courseAuthors - ${courseAuthors}`);
-
 	const addAuthors = (newName) => {
 		const newAuthors = [...props.authors];
 		if (newName.length >= 2) newAuthors.push({ id: uuidv4(), name: newName });
 		props.setAuthors(newAuthors);
 		setName('');
+	};
+
+	const isEnabled = (): boolean => {
+		return (
+			courseTitle.length >= 2 &&
+			courseDescription.length >= 2 &&
+			courseAuthors.length != 0 &&
+			duration != 0
+		);
 	};
 
 	return (
@@ -60,12 +67,14 @@ const CreateCourse: React.FC<CreateCourseProps> = (props) => {
 						id='create_course_title'
 						onChange={(e) => setCourseTitle(e.target.value)}
 						required={true}
+						value={courseTitle}
 					/>
 					<Button
 						buttonText='Create course'
 						class='create_course_button'
 						onClick={createCourse}
 						type='submit'
+						disabled={!isEnabled()}
 					/>
 				</div>
 				<div className='create_course_description block'>
@@ -107,8 +116,9 @@ const CreateCourse: React.FC<CreateCourseProps> = (props) => {
 								type='text'
 								labelText='Duration'
 								id='enter_duration_input'
-								onChange={(e) => setDuration(e.target.value)}
+								onChange={(e) => setDuration(+e.target.value)}
 								required={true}
+								value={duration === 0 ? '' : duration.toString()}
 							/>
 							<p className='enter_duration_output'>
 								Duration: {getCourseDuration(duration)}

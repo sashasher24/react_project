@@ -17,9 +17,8 @@ const SearchBar: React.FC<SearchBarProps> = (props) => {
 				type='search'
 				placeholderText='Enter Course Name ...'
 				className='search_bar_input'
-				onChange={(e) => {
-					props.setFilterValue(e.target.value);
-				}}
+				onChange={(e) => props.setFilterValue(e.target.value)}
+				value={props.filterValue}
 			/>
 			<Button
 				buttonText='search'
