@@ -20,6 +20,16 @@ interface CourseCard {
 	authors: Author[];
 }
 const CourseCard: React.FC<CourseCard> = ({ card, authors }) => {
+	const displayAuthors = (): string => {
+		const maxLength = 46;
+		const result =
+			getAuthors(card.authors, authors).length >= maxLength
+				? getAuthors(card.authors, authors).substring(0, maxLength).trim() +
+				  '...'
+				: getAuthors(card.authors, authors);
+		return result;
+	};
+
 	return (
 		<div className='course_card'>
 			<div className='course_card_main_info'>
@@ -29,7 +39,7 @@ const CourseCard: React.FC<CourseCard> = ({ card, authors }) => {
 			<div className='course_card_details'>
 				<p>
 					<span className='course_card_details_name'>Authors: </span>
-					{getAuthors(card.authors, authors)}
+					{displayAuthors()}
 				</p>
 				<p>
 					<span className='course_card_details_name'>Duration: </span>
