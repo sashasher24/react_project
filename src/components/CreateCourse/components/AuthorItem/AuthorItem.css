@@ -1,0 +1,6 @@
+.author_item {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 30px;
+}
+

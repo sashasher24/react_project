@@ -1,0 +1,7 @@
+.header_login_section {
+    justify-self: flex-end;
+    margin-right: 20px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+}
