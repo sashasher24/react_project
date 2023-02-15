@@ -13,12 +13,13 @@
 .create_course_main_info {
     display: flex;
     justify-content: space-between;
+    border: 1px solid black;
+    margin: 0 20px;
 }
 
 .create_course_left_info_block {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
 }
 
 .create_course_right_info_block {
@@ -33,7 +34,6 @@
 }
 
 .block {
-    border: 1px solid black;
     margin: 10px;
     padding: 10px;
 }
@@ -47,4 +47,8 @@
     align-self: center;
     font-weight: bold;
     font-size: 20px;
+}
+
+.create_course_add_duration {
+    margin-top: 130px;
 }
