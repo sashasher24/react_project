@@ -3,10 +3,10 @@ import React, { ChangeEventHandler } from 'react';
 import './Input.css';
 
 interface InputProps {
-	labelText?: string;
 	placeholderText: string;
 	className: string;
 	type: string;
+	labelText?: string;
 	id?: string;
 	onChange?:
 		| ChangeEventHandler<HTMLInputElement>
@@ -16,10 +16,10 @@ interface InputProps {
 	value?: string;
 }
 const Input: React.FC<InputProps> = ({
-	labelText,
 	placeholderText,
 	className,
 	type,
+	labelText,
 	id,
 	onChange,
 	minLength,

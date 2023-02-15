@@ -4,9 +4,9 @@ import Button from '../../../../common/Button/Button';
 import './AuthorItem.css';
 
 interface AuthorItemProps {
-	id?: string;
 	name: string;
 	buttonText: string;
+	id?: string;
 	onClick?: React.MouseEventHandler<HTMLButtonElement>;
 }
 const AuthorItem: React.FC<AuthorItemProps> = (props) => {
