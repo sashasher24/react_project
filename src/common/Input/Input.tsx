@@ -8,9 +8,8 @@ interface InputProps {
 	type: string;
 	labelText?: string;
 	id?: string;
-	onChange?:
-		| ChangeEventHandler<HTMLInputElement>
-		| ChangeEventHandler<HTMLTextAreaElement>;
+	onChangeTextArea?: ChangeEventHandler<HTMLTextAreaElement>;
+	onChange?: ChangeEventHandler<HTMLInputElement>;
 	minLength?: number;
 	required?: boolean;
 	value?: string;
@@ -21,6 +20,7 @@ const Input: React.FC<InputProps> = ({
 	type,
 	labelText,
 	id,
+	onChangeTextArea,
 	onChange,
 	minLength,
 	required,
@@ -39,7 +39,7 @@ const Input: React.FC<InputProps> = ({
 					placeholder={placeholderText}
 					className={className}
 					id={id ? id : 'input_without_label'}
-					onChange={onChange}
+					onChange={onChangeTextArea}
 					required={required}
 				/>
 			) : (

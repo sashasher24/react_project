@@ -25,6 +25,7 @@ const Courses: React.FC<CoursesProps> = (props) => {
 					filterValue={props.filterValue}
 					setFilterValue={props.setFilterValue}
 				/>
+				{/* <Link to='/' /> */}
 				<Button
 					buttonText='Add new course'
 					class='add_course_button'

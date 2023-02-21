@@ -84,7 +84,7 @@ const CreateCourse: React.FC<CreateCourseProps> = (props) => {
 						type='textarea'
 						labelText='Description'
 						id='create_course_description_input'
-						onChange={(e) => setCourseDescription(e.target.value)}
+						onChangeTextArea={(e) => setCourseDescription(e.target.value)}
 						required={true}
 					/>
 				</div>
