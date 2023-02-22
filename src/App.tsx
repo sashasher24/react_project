@@ -4,18 +4,17 @@ import Header from './components/Header/Header';
 import Courses from './components/Courses/Courses';
 import { mockedAuthorsList, mockedCoursesList } from './constants';
 import CreateCourse from './components/CreateCourse/CreateCourse';
+import Registration from './components/Registration/Registration';
+import Login from './components/Login/Login';
+import { Route, Routes } from 'react-router-dom';
+import CourseInfo from './components/CourseInfo/CourseInfo';
 
 function App() {
-	const [isCreateCourse, setIsCreateCourse] = useState(false);
 	const [isFiltered, setIsFiltered] = useState(false);
 	const [filterValue, setFilterValue] = useState('');
 	const [filteredCourses, setFilteredCourses] = useState([]);
 	const [courses, setCourses] = useState(mockedCoursesList);
 	const [authors, setAuthors] = useState(mockedAuthorsList);
-
-	const openCreateMode = () => {
-		setIsCreateCourse(true);
-	};
 
 	const filterCourses = (value) => {
 		let filtered = courses;
@@ -35,24 +34,34 @@ function App() {
 		<>
 			<Header />
 			<main>
-				{isCreateCourse ? (
-					<CreateCourse
-						setIsCreateCourse={setIsCreateCourse}
-						setCourses={setCourses}
-						courses={courses}
-						authors={authors}
-						setAuthors={setAuthors}
+				<Routes>
+					<Route path='/registration' element={<Registration />} />
+					<Route path='/login' element={<Login />} />
+					<Route path='/courses/:courseId' element={<CourseInfo />} />
+					<Route
+						path='/courses'
+						element={
+							<Courses
+								courses={isFiltered ? filteredCourses : courses}
+								filterCourses={filterCourses}
+								filterValue={filterValue}
+								setFilterValue={setFilterValue}
+								authors={authors}
+							/>
+						}
 					/>
-				) : (
-					<Courses
-						courses={isFiltered ? filteredCourses : courses}
-						createCourseSwitch={openCreateMode}
-						filterCourses={filterCourses}
-						filterValue={filterValue}
-						setFilterValue={setFilterValue}
-						authors={authors}
+					<Route
+						path='/courses/add'
+						element={
+							<CreateCourse
+								setCourses={setCourses}
+								courses={courses}
+								authors={authors}
+								setAuthors={setAuthors}
+							/>
+						}
 					/>
-				)}
+				</Routes>
 			</main>
 		</>
 	);

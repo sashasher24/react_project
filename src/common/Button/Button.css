@@ -13,7 +13,11 @@
     box-shadow: none;
 }
 
-.header_login_button, .create_course_button, .add_author_button, .create_author_button {
+.header_login_button,
+.create_course_button,
+.add_author_button,
+.create_author_button,
+.login_button {
     background: none;
     border: 1px solid green;
     border-radius: 5px;
@@ -25,12 +29,20 @@
     align-self: center;
 }
 
-.header_login_button:hover, .create_course_button:hover, .add_author_button:hover, .create_author_button:hover {
+.header_login_button:hover,
+.create_course_button:hover,
+.add_author_button:hover,
+.create_author_button:hover,
+.login_button:hover {
     box-shadow: 2px 2px 20px -10px green;
     cursor: pointer;
 }
 
-.header_login_button:active, .create_course_button:active, .add_author_button:active, .create_author_button:active {
+.header_login_button:active,
+.create_course_button:active,
+.add_author_button:active,
+.create_author_button:active,
+.login_button:active {
     box-shadow: 2px 2px 25px -10px red;
 }
 

@@ -7,10 +7,10 @@ import SearchBar from './components/SearchBar/SearchBar';
 import './Courses.css';
 import Button from '../../common/Button/Button';
 import { Author } from '../CreateCourse/components/AuthorsList/AuthorsList';
+import { Link } from 'react-router-dom';
 
 interface CoursesProps {
 	courses: CourseCardProps[];
-	createCourseSwitch: React.MouseEventHandler<HTMLButtonElement>;
 	filterCourses: (value: string) => void;
 	filterValue: string;
 	setFilterValue: Dispatch<SetStateAction<string>>;
@@ -25,12 +25,9 @@ const Courses: React.FC<CoursesProps> = (props) => {
 					filterValue={props.filterValue}
 					setFilterValue={props.setFilterValue}
 				/>
-				{/* <Link to='/' /> */}
-				<Button
-					buttonText='Add new course'
-					class='add_course_button'
-					onClick={props.createCourseSwitch}
-				/>
+				<Link to='/courses/add'>
+					<Button buttonText='Add new course' class='add_course_button' />
+				</Link>
 			</div>
 			<div className='main_couses_section-courses'>
 				{props.courses.map((course) => (
