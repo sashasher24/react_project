@@ -62,7 +62,9 @@ const Login: React.FC<LoginProps> = (props) => {
 			<Button buttonText='login' class='login_button' type='submit' />
 			<p>
 				If you don't have an account you can{' '}
-				<Link to='/registration'>Register</Link>
+				<Link to='/registration' className='link_to_registration'>
+					Register
+				</Link>
 			</p>
 		</form>
 	);

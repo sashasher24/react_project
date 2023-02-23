@@ -9,3 +9,7 @@
 .login_form>* {
     margin: 10px 0;
 }
+
+.link_to_registration {
+    color: blue;
+}

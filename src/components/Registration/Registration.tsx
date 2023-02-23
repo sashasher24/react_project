@@ -63,7 +63,10 @@ const Registration: React.FC = () => {
 			/>
 			<Button buttonText='Register' class='login_button' type='submit' />
 			<p>
-				If you already have an account you can <Link to='/login'>Login</Link>
+				If you already have an account you can{' '}
+				<Link to='/login' className='link_to_login'>
+					Login
+				</Link>
 			</p>
 		</form>
 	);
