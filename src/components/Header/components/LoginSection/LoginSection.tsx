@@ -14,7 +14,6 @@ interface LoginSectionProps {
 
 const LoginSection: React.FC<LoginSectionProps> = (props) => {
 	//navigate to login page when clocking logOut and remove token from localStorage
-	//useLocation hook to not show this section on login and registration page
 	return (
 		<div className='header_login_section'>
 			{props.isLoggedIn && <UserName name={props.userName} />}

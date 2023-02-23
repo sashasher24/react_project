@@ -9,7 +9,6 @@ const Registration: React.FC = () => {
 	const [registered, setRegistered] = useState(true);
 
 	function handleSubmit(event) {
-		alert('An essay was submitted: ');
 		event.preventDefault();
 
 		//change so that isRegistered will be changing based on backend logic
@@ -20,7 +19,6 @@ const Registration: React.FC = () => {
 
 	useEffect(() => {
 		if (registered) {
-			// fake.logout();
 			navigate('/login');
 		}
 	}, [registered]);
