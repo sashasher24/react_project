@@ -1,17 +1,43 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import axios from 'axios';
+import React, { Dispatch, SetStateAction, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import Button from '../../common/Button/Button';
 import Input from '../../common/Input/Input';
 
 import './Login.css';
 
-const Login: React.FC = () => {
-	function handleSubmit(event) {
-		alert('An essay was submitted: ');
+interface LoginProps {
+	setIsLoggedIn: Dispatch<SetStateAction<boolean>>;
+	setUserName: Dispatch<SetStateAction<string>>;
+}
 
-		//should be getting a token in the result value of a response, to save it to localstorage
-		//redirect to courses after successful login
+const Login: React.FC<LoginProps> = (props) => {
+	const [email, setEmail] = useState('');
+	const [password, setPassword] = useState('');
+
+	const navigate = useNavigate();
+
+	function handleSubmit(event) {
 		event.preventDefault();
+
+		const userCredentials = {
+			email: email,
+			password: password,
+		};
+
+		axios
+			.post('http://localhost:4000/login', userCredentials)
+			.then((response) => {
+				props.setIsLoggedIn(true);
+				props.setUserName(response.data.user.name);
+				console.log(response);
+				navigate('/courses');
+				localStorage.setItem('token', response.data.result);
+			})
+			.catch((e) => {
+				alert(e.message);
+				console.log(e.message);
+			});
 	}
 
 	return (
@@ -22,12 +48,16 @@ const Login: React.FC = () => {
 				placeholderText='Enter email'
 				className='enter_email_input'
 				type='text'
+				onChange={(e) => setEmail(e.target.value)}
+				value={email}
 			/>
 			<Input
 				labelText='Password'
 				placeholderText='Enter password'
 				className='enter_password_input'
 				type='text'
+				onChange={(e) => setPassword(e.target.value)}
+				value={password}
 			/>
 			<Button buttonText='login' class='login_button' type='submit' />
 			<p>

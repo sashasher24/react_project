@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Button from '../../common/Button/Button';
 import Input from '../../common/Input/Input';
@@ -6,22 +7,32 @@ import Input from '../../common/Input/Input';
 import './Registration.css';
 
 const Registration: React.FC = () => {
-	const [registered, setRegistered] = useState(true);
+	const [name, setName] = useState('');
+	const [email, setEmail] = useState('');
+	const [password, setPassword] = useState('');
+
+	const navigate = useNavigate();
 
 	function handleSubmit(event) {
 		event.preventDefault();
 
-		//change so that isRegistered will be changing based on backend logic
-		setRegistered(!registered);
+		const newUser = {
+			name: name,
+			email: email,
+			password: password,
+		};
+
+		axios
+			.post('http://localhost:4000/register', newUser)
+			.then((response) => {
+				console.log(response);
+				navigate('/login');
+			})
+			.catch((e) => {
+				alert(e.message);
+				console.log(e.message);
+			});
 	}
-
-	const navigate = useNavigate();
-
-	useEffect(() => {
-		if (registered) {
-			navigate('/login');
-		}
-	}, [registered]);
 
 	return (
 		<form className='registration_form' onSubmit={handleSubmit}>
@@ -31,18 +42,24 @@ const Registration: React.FC = () => {
 				placeholderText='Enter name'
 				className='enter_name_input'
 				type='text'
+				onChange={(e) => setName(e.target.value)}
+				value={name}
 			/>
 			<Input
 				labelText='Email'
 				placeholderText='Enter email'
 				className='enter_email_input'
 				type='text'
+				onChange={(e) => setEmail(e.target.value)}
+				value={email}
 			/>
 			<Input
 				labelText='Password'
 				placeholderText='Enter password'
 				className='enter_password_input'
 				type='text'
+				onChange={(e) => setPassword(e.target.value)}
+				value={password}
 			/>
 			<Button buttonText='Register' class='login_button' type='submit' />
 			<p>
