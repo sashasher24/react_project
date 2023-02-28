@@ -40,8 +40,6 @@ function App() {
 		isLoggedIn ? navigate('/courses') : navigate('/login');
 	}, [isLoggedIn]);
 
-	console.log(`logged - ${isLoggedIn}`);
-
 	return (
 		<>
 			<Header
