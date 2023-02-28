@@ -18,21 +18,23 @@ const Header: React.FC<HeaderProps> = (props) => {
 		props.setUserName('');
 	};
 
-	const location = useLocation();
+	const { pathname } = useLocation();
+
+	const isLoginOrRegistrationPage = () =>
+		pathname === '/login' || pathname === '/registration';
 
 	return (
 		<header>
 			<Link to={`/courses`}>
 				<Logo />
 			</Link>
-			{location.pathname !== '/login' &&
-				location.pathname !== '/registration' && (
-					<LoginSection
-						isLoggedIn={props.isLoggedIn}
-						userName={props.userName}
-						logOutFunction={logOut}
-					/>
-				)}
+			{!isLoginOrRegistrationPage() && (
+				<LoginSection
+					isLoggedIn={props.isLoggedIn}
+					userName={props.userName}
+					logOutFunction={logOut}
+				/>
+			)}
 		</header>
 	);
 };

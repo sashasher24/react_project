@@ -6,6 +6,12 @@ import Input from '../../common/Input/Input';
 
 import './Registration.css';
 
+type NewUser = {
+	name: string;
+	email: string;
+	password: string;
+};
+
 const Registration: React.FC = () => {
 	const [name, setName] = useState('');
 	const [email, setEmail] = useState('');
@@ -16,7 +22,7 @@ const Registration: React.FC = () => {
 	function handleSubmit(event) {
 		event.preventDefault();
 
-		const newUser = {
+		const newUser: NewUser = {
 			name: name,
 			email: email,
 			password: password,

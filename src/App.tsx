@@ -17,7 +17,9 @@ function App() {
 	const [courses, setCourses] = useState(mockedCoursesList);
 	const [authors, setAuthors] = useState(mockedAuthorsList);
 
-	const [isLoggedIn, setIsLoggedIn] = useState(false);
+	const [isLoggedIn, setIsLoggedIn] = useState(
+		localStorage.getItem('token') !== null
+	);
 	const [userName, setUserName] = useState('');
 
 	const filterCourses = (value) => {
@@ -37,6 +39,8 @@ function App() {
 	useEffect(() => {
 		isLoggedIn ? navigate('/courses') : navigate('/login');
 	}, [isLoggedIn]);
+
+	console.log(`logged - ${isLoggedIn}`);
 
 	return (
 		<>

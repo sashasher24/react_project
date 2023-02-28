@@ -11,6 +11,11 @@ interface LoginProps {
 	setUserName: Dispatch<SetStateAction<string>>;
 }
 
+type UserCredentials = {
+	email: string;
+	password: string;
+};
+
 const Login: React.FC<LoginProps> = (props) => {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
@@ -20,7 +25,7 @@ const Login: React.FC<LoginProps> = (props) => {
 	function handleSubmit(event) {
 		event.preventDefault();
 
-		const userCredentials = {
+		const userCredentials: UserCredentials = {
 			email: email,
 			password: password,
 		};
