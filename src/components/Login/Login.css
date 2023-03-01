@@ -1,0 +1,15 @@
+.login_form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 100px 0;
+}
+
+.login_form>* {
+    margin: 10px 0;
+}
+
+.link_to_registration {
+    color: blue;
+}

@@ -1,29 +1,25 @@
-a {
-    text-decoration: none;
-    color: black;
+.course_info_block {
+    display: flex;
+    flex-direction: column;
 }
 
-.course_card {
+.course_name {
+    align-self: center;
+}
+
+.author_name:nth-of-type(1) {
+    padding-top: 10px;
+}
+
+.course_info_page_info {
     display: flex;
     justify-content: space-between;
-    border: 1px solid darkred;
     margin: 10px 0;
     padding: 20px;
 }
 
 .course_card_main_info {
     padding: 0 20px;
-    width: 100%;
-}
-
-.course_card_title {
-    font-weight: bold;
-    font-size: 30px;
-    margin-bottom: 20px;
-}
-
-.course_card_description {
-    margin-right: 100px;
 }
 
 .course_card_details {

@@ -1,4 +1,8 @@
-.search_bar_input, .create_course_title_input {
+.search_bar_input,
+.create_course_title_input,
+.enter_password_input,
+.enter_email_input,
+.enter_name_input {
     border: 1px solid orange;
     margin: 10px 10px 10px 0;
     padding: 5px;
@@ -6,7 +10,11 @@
     height: 25px;
 }
 
-.search_bar_input:focus, .create_course_title_input:focus {
+.search_bar_input:focus,
+.create_course_title_input:focus,
+.enter_password_input:focus,
+.enter_email_input:focus,
+.enter_name_input:focus {
     outline: 1.5px solid orange;
 }
 
@@ -20,7 +28,8 @@
     margin-top: 10px;
 }
 
-.enter_author_name_input, .enter_duration_input {
+.enter_author_name_input,
+.enter_duration_input {
     border: 1px solid orange;
     margin: 10px 10px 10px 0;
     padding: 5px;

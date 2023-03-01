@@ -1,31 +1,40 @@
-import React, { useState } from 'react';
+import React, { Dispatch, SetStateAction, useState } from 'react';
 import Logo from './components/Logo/Logo';
 import './Header.css';
 import LoginSection from './components/LoginSection/LoginSection';
+import { Link, useLocation } from 'react-router-dom';
 
-const Header: React.FC = () => {
-	const [loggedIn, setLoggedIn] = useState(false);
-	const [userName, setUserName] = useState('');
+interface HeaderProps {
+	isLoggedIn: boolean;
+	setIsLoggedIn: Dispatch<SetStateAction<boolean>>;
+	userName: string;
+	setUserName: Dispatch<SetStateAction<string>>;
+}
 
-	const logIn = () => {
-		setLoggedIn(true);
-		setUserName('Sasha');
-	};
-
+const Header: React.FC<HeaderProps> = (props) => {
 	const logOut = () => {
-		setLoggedIn(false);
-		setUserName('');
+		props.setIsLoggedIn(false);
+		localStorage.removeItem('token');
+		props.setUserName('');
 	};
+
+	const { pathname } = useLocation();
+
+	const isLoginOrRegistrationPage = () =>
+		pathname === '/login' || pathname === '/registration';
 
 	return (
 		<header>
-			<Logo />
-			<LoginSection
-				isLoggedIn={loggedIn}
-				userName={userName}
-				logInFunction={logIn}
-				logOutFunction={logOut}
-			/>
+			<Link to={`/courses`}>
+				<Logo />
+			</Link>
+			{!isLoginOrRegistrationPage() && (
+				<LoginSection
+					isLoggedIn={props.isLoggedIn}
+					userName={props.userName}
+					logOutFunction={logOut}
+				/>
+			)}
 		</header>
 	);
 };

@@ -9,9 +9,9 @@ import AuthorsList, { Author } from './components/AuthorsList/AuthorsList';
 import CourseAuthorsList from './components/CourseAuthorsList/CourseAuthorsList';
 import { CourseCardProps } from '../Courses/components/CourseCard/CourseCard';
 import { formatCreationDate } from '../../helpers/formatCreationDate';
+import { Link } from 'react-router-dom';
 
 interface CreateCourseProps {
-	setIsCreateCourse: Dispatch<SetStateAction<boolean>>;
 	setCourses: Dispatch<SetStateAction<CourseCardProps[]>>;
 	courses: CourseCardProps[];
 	authors: Author[];
@@ -36,7 +36,6 @@ const CreateCourse: React.FC<CreateCourseProps> = (props) => {
 			authors: courseAuthors.map((author) => author.id),
 		});
 		props.setCourses(newCourses);
-		props.setIsCreateCourse(false);
 	};
 
 	const addAuthors = (newName) => {
@@ -69,13 +68,15 @@ const CreateCourse: React.FC<CreateCourseProps> = (props) => {
 						required={true}
 						value={courseTitle}
 					/>
-					<Button
-						buttonText='Create course'
-						class='create_course_button'
-						onClick={createCourse}
-						type='submit'
-						disabled={!isEnabled()}
-					/>
+					<Link to='/courses'>
+						<Button
+							buttonText='Create course'
+							class='create_course_button'
+							onClick={createCourse}
+							type='submit'
+							disabled={!isEnabled()}
+						/>
+					</Link>
 				</div>
 				<div className='create_course_description block'>
 					<Input
@@ -84,7 +85,7 @@ const CreateCourse: React.FC<CreateCourseProps> = (props) => {
 						type='textarea'
 						labelText='Description'
 						id='create_course_description_input'
-						onChange={(e) => setCourseDescription(e.target.value)}
+						onChangeTextArea={(e) => setCourseDescription(e.target.value)}
 						required={true}
 					/>
 				</div>

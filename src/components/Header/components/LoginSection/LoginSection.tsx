@@ -3,11 +3,11 @@ import UserName from '../UserName/UserName';
 import Button from '../../../../common/Button/Button';
 
 import './LoginSection.css';
+import { Link } from 'react-router-dom';
 
 interface LoginSectionProps {
 	isLoggedIn: boolean;
 	userName: string;
-	logInFunction: () => void;
 	logOutFunction: () => void;
 }
 
@@ -15,11 +15,13 @@ const LoginSection: React.FC<LoginSectionProps> = (props) => {
 	return (
 		<div className='header_login_section'>
 			{props.isLoggedIn && <UserName name={props.userName} />}
-			<Button
-				buttonText={props.isLoggedIn ? 'Log Out' : 'Log In'}
-				class='header_login_button'
-				onClick={props.isLoggedIn ? props.logOutFunction : props.logInFunction}
-			/>
+			<Link to={'/login'}>
+				<Button
+					buttonText={props.isLoggedIn ? 'Log Out' : 'Log In'}
+					class='header_login_button'
+					onClick={props.isLoggedIn && props.logOutFunction}
+				/>
+			</Link>
 		</div>
 	);
 };
