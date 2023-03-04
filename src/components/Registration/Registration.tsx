@@ -1,12 +1,13 @@
-import axios from 'axios';
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import Button from '../../common/Button/Button';
 import Input from '../../common/Input/Input';
+import { register } from '../../store/user/actions';
 
 import './Registration.css';
 
-type NewUser = {
+export type NewUser = {
 	name: string;
 	email: string;
 	password: string;
@@ -18,6 +19,7 @@ const Registration: React.FC = () => {
 	const [password, setPassword] = useState('');
 
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
 
 	function handleSubmit(event) {
 		event.preventDefault();
@@ -27,17 +29,8 @@ const Registration: React.FC = () => {
 			email: email,
 			password: password,
 		};
-
-		axios
-			.post('http://localhost:4000/register', newUser)
-			.then((response) => {
-				console.log(response);
-				navigate('/login');
-			})
-			.catch((e) => {
-				alert(e.message);
-				console.log(e.message);
-			});
+		dispatch(register(newUser));
+		navigate('/login');
 	}
 
 	return (

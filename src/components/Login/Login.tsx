@@ -1,48 +1,32 @@
-import axios from 'axios';
-import React, { Dispatch, SetStateAction, useState } from 'react';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import Button from '../../common/Button/Button';
 import Input from '../../common/Input/Input';
+import { logIn } from '../../store/user/actions';
 
 import './Login.css';
 
-interface LoginProps {
-	setIsLoggedIn: Dispatch<SetStateAction<boolean>>;
-	setUserName: Dispatch<SetStateAction<string>>;
-}
-
-type UserCredentials = {
+export type UserCredentials = {
 	email: string;
 	password: string;
 };
 
-const Login: React.FC<LoginProps> = (props) => {
+const Login: React.FC = () => {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 
+	const dispatch = useDispatch();
 	const navigate = useNavigate();
 
 	function handleSubmit(event) {
-		event.preventDefault();
-
 		const userCredentials: UserCredentials = {
 			email: email,
 			password: password,
 		};
-
-		axios
-			.post('http://localhost:4000/login', userCredentials)
-			.then((response) => {
-				props.setIsLoggedIn(true);
-				props.setUserName(response.data.user.name);
-				console.log(response);
-				navigate('/courses');
-				localStorage.setItem('token', response.data.result);
-			})
-			.catch((e) => {
-				alert(e.message);
-				console.log(e.message);
-			});
+		event.preventDefault();
+		dispatch(logIn(userCredentials));
+		navigate('/courses');
 	}
 
 	return (

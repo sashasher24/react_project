@@ -8,6 +8,8 @@ import Registration from './components/Registration/Registration';
 import Login from './components/Login/Login';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import CourseInfo from './components/CourseInfo/CourseInfo';
+import { useSelector } from 'react-redux/es/exports';
+import { userState } from './store/user/types';
 
 function App() {
 	const navigate = useNavigate();
@@ -17,10 +19,8 @@ function App() {
 	const [courses, setCourses] = useState(mockedCoursesList);
 	const [authors, setAuthors] = useState(mockedAuthorsList);
 
-	const [isLoggedIn, setIsLoggedIn] = useState(
-		localStorage.getItem('token') !== null
-	);
-	const [userName, setUserName] = useState('');
+	const user = useSelector((state: { user: userState }) => state.user);
+	console.log(user);
 
 	const filterCourses = (value) => {
 		let filtered = courses;
@@ -37,26 +37,16 @@ function App() {
 	};
 
 	useEffect(() => {
-		isLoggedIn ? navigate('/courses') : navigate('/login');
-	}, [isLoggedIn]);
+		user.isAuth ? navigate('/courses') : navigate('/login');
+	}, [user]);
 
 	return (
 		<>
-			<Header
-				isLoggedIn={isLoggedIn}
-				setIsLoggedIn={setIsLoggedIn}
-				userName={userName}
-				setUserName={setUserName}
-			/>
+			<Header />
 			<main>
 				<Routes>
 					<Route path='/registration' element={<Registration />} />
-					<Route
-						path='/login'
-						element={
-							<Login setIsLoggedIn={setIsLoggedIn} setUserName={setUserName} />
-						}
-					/>
+					<Route path='/login' element={<Login />} />
 					<Route
 						path='/courses/:courseId'
 						element={<CourseInfo courses={courses} authors={authors} />}
