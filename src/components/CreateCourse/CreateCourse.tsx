@@ -1,13 +1,12 @@
-import React, { Dispatch, SetStateAction, useState } from 'react';
+import React, { useState } from 'react';
 import Input from '../../common/Input/Input';
 import Button from '../../common/Button/Button';
 import { v4 as uuidv4 } from 'uuid';
 
 import './CreateCourse.css';
 import { getCourseDuration } from '../../helpers/getCourseDuration';
-import AuthorsList, { Author } from './components/AuthorsList/AuthorsList';
+import AuthorsList from './components/AuthorsList/AuthorsList';
 import CourseAuthorsList from './components/CourseAuthorsList/CourseAuthorsList';
-import { CourseCardProps } from '../Courses/components/CourseCard/CourseCard';
 import { formatCreationDate } from '../../helpers/formatCreationDate';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -15,12 +14,7 @@ import { authorsState } from '../../store/authors/types';
 import { createAuthor } from '../../store/authors/actions';
 import { createCourse } from '../../store/courses/actions';
 
-interface CreateCourseProps {
-	setCourses: Dispatch<SetStateAction<CourseCardProps[]>>;
-	courses: CourseCardProps[];
-	setAuthors: Dispatch<SetStateAction<Author[]>>;
-}
-const CreateCourse: React.FC<CreateCourseProps> = (props) => {
+const CreateCourse: React.FC = () => {
 	const [name, setName] = useState('');
 	const [duration, setDuration] = useState(0);
 	const [courseTitle, setCourseTitle] = useState('');

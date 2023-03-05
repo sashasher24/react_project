@@ -26,3 +26,10 @@ export const createCourse = (courseData) => {
 		payload: courseData,
 	};
 };
+
+export const deleteCourse = (courseData) => {
+	return {
+		type: 'DELETE_COURSE',
+		payload: courseData,
+	};
+};

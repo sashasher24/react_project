@@ -39,3 +39,8 @@ a {
 .course_card_details_name {
     font-weight: bold;
 }
+
+.course_card_buttons {
+    display: flex;
+    flex-direction: column;
+}

@@ -9,9 +9,13 @@ const coursesReducer = (state: coursesState = coursesInitialState, action) => {
 		case 'ADD_COURSE':
 			console.log('add course');
 			return [...state, action.payload];
-		case 'DELETE_COURSE':
+		case 'DELETE_COURSE': {
 			console.log('delete course');
-			return state;
+			const courses = [...state];
+			const index = courses.indexOf(action.payload);
+			courses.splice(index, 1);
+			return courses;
+		}
 		case 'UPDATE_COURSE':
 			console.log('update course');
 			return state;
