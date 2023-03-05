@@ -21,17 +21,17 @@ interface CourseCard {
 	card: CourseCardProps;
 }
 const CourseCard: React.FC<CourseCard> = ({ card }) => {
-	const authorsData = useSelector(
+	const authors = useSelector(
 		(state: { authors: authorsState }) => state.authors
 	);
 
 	const displayAuthors = (): string => {
 		const maxLength = 46;
 		const result =
-			getAuthors(card.authors, authorsData).length >= maxLength
-				? getAuthors(card.authors, authorsData).substring(0, maxLength).trim() +
+			getAuthors(card.authors, authors).length >= maxLength
+				? getAuthors(card.authors, authors).substring(0, maxLength).trim() +
 				  '...'
-				: getAuthors(card.authors, authorsData);
+				: getAuthors(card.authors, authors);
 		return result;
 	};
 

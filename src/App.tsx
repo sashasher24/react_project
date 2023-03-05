@@ -47,10 +47,7 @@ function App() {
 				<Routes>
 					<Route path='/registration' element={<Registration />} />
 					<Route path='/login' element={<Login />} />
-					<Route
-						path='/courses/:courseId'
-						element={<CourseInfo courses={courses} authors={authors} />}
-					/>
+					<Route path='/courses/:courseId' element={<CourseInfo />} />
 					<Route
 						path='/courses'
 						element={
