@@ -20,6 +20,7 @@ const CourseInfo: React.FC = () => {
 	);
 
 	const course = courses.find((el) => el.id === courseId);
+	console.log(course);
 
 	return (
 		<div className='course_info_block'>

@@ -6,8 +6,7 @@ import { Provider } from 'react-redux';
 import { store } from './store';
 
 import './index.css';
-import { fetchAuthors } from './store/authors/actions';
-import { fetchCourses } from './store/courses/actions';
+import { fetchAuthors, fetchCourses } from './services';
 
 const root = ReactDOM.createRoot(
 	document.getElementById('root') as HTMLElement
