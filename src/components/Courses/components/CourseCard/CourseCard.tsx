@@ -4,8 +4,9 @@ import './CourseCard.css';
 import Button from '../../../../common/Button/Button';
 import { getAuthors } from '../../../../helpers/getAuthors';
 import { getCourseDuration } from '../../../../helpers/getCourseDuration';
-import { Author } from '../../../CreateCourse/components/AuthorsList/AuthorsList';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { authorsState } from '../../../../store/authors/types';
 
 export interface CourseCardProps {
 	id?: string;
@@ -18,16 +19,19 @@ export interface CourseCardProps {
 
 interface CourseCard {
 	card: CourseCardProps;
-	authors: Author[];
 }
-const CourseCard: React.FC<CourseCard> = ({ card, authors }) => {
+const CourseCard: React.FC<CourseCard> = ({ card }) => {
+	const authorsData = useSelector(
+		(state: { authors: authorsState }) => state.authors
+	);
+
 	const displayAuthors = (): string => {
 		const maxLength = 46;
 		const result =
-			getAuthors(card.authors, authors).length >= maxLength
-				? getAuthors(card.authors, authors).substring(0, maxLength).trim() +
+			getAuthors(card.authors, authorsData).length >= maxLength
+				? getAuthors(card.authors, authorsData).substring(0, maxLength).trim() +
 				  '...'
-				: getAuthors(card.authors, authors);
+				: getAuthors(card.authors, authorsData);
 		return result;
 	};
 

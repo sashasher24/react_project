@@ -55,11 +55,10 @@ function App() {
 						path='/courses'
 						element={
 							<Courses
-								courses={isFiltered ? filteredCourses : courses}
+								// courses={isFiltered ? filteredCourses : courses}
 								filterCourses={filterCourses}
 								filterValue={filterValue}
 								setFilterValue={setFilterValue}
-								authors={authors}
 							/>
 						}
 					/>

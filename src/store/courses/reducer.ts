@@ -4,6 +4,8 @@ const coursesInitialState = [];
 
 const coursesReducer = (state: coursesState = coursesInitialState, action) => {
 	switch (action.type) {
+		case 'FETCH_COURSES_SUCCESS':
+			return action.payload;
 		case 'ADD_COURSE':
 			console.log('add course');
 			break;

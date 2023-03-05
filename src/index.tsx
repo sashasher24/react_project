@@ -6,10 +6,16 @@ import { Provider } from 'react-redux';
 import { store } from './store';
 
 import './index.css';
+import { fetchAuthors } from './store/authors/actions';
+import { fetchCourses } from './store/courses/actions';
 
 const root = ReactDOM.createRoot(
 	document.getElementById('root') as HTMLElement
 );
+
+store.dispatch(fetchAuthors());
+store.dispatch(fetchCourses());
+
 root.render(
 	<React.StrictMode>
 		<Provider store={store}>
