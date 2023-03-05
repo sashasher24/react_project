@@ -20,26 +20,9 @@ export const fetchAuthors = () => {
 	};
 };
 
-export const getAuthors = () => {
-	return {
-		type: 'GET_AUTHORS',
-	};
-};
-
-export const createAuthor = () => {
+export const createAuthor = (authorData) => {
 	return {
 		type: 'CREATE_AUTHOR',
-	};
-};
-
-export const addCourseAuthor = () => {
-	return {
-		type: 'ADD_COURSE_AUTHOR',
-	};
-};
-
-export const deleteCourseAuthor = () => {
-	return {
-		type: 'DELETE_COURSE_AUTHOR',
+		payload: authorData,
 	};
 };
