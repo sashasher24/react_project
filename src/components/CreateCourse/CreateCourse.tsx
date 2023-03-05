@@ -13,6 +13,7 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { authorsState } from '../../store/authors/types';
 import { createAuthor } from '../../store/authors/actions';
+import { createCourse } from '../../store/courses/actions';
 
 interface CreateCourseProps {
 	setCourses: Dispatch<SetStateAction<CourseCardProps[]>>;
@@ -25,6 +26,8 @@ const CreateCourse: React.FC<CreateCourseProps> = (props) => {
 	const [courseTitle, setCourseTitle] = useState('');
 	const [courseDescription, setCourseDescription] = useState('');
 
+	const dispatch = useDispatch();
+
 	const authors = useSelector(
 		(state: { authors: authorsState }) => state.authors
 	);
@@ -32,20 +35,14 @@ const CreateCourse: React.FC<CreateCourseProps> = (props) => {
 		(state: { courseAuthors: authorsState }) => state.courseAuthors
 	);
 
-	const createCourse = () => {
-		const newCourses = [...props.courses];
-		newCourses.push({
-			id: uuidv4(),
-			title: courseTitle,
-			description: courseDescription,
-			creationDate: formatCreationDate(new Date()),
-			duration: duration,
-			authors: courseAuthors.map((author) => author.id),
-		});
-		props.setCourses(newCourses);
+	const newCourse = {
+		id: uuidv4(),
+		title: courseTitle,
+		description: courseDescription,
+		creationDate: formatCreationDate(new Date()),
+		duration: duration,
+		authors: courseAuthors.map((author) => author.id),
 	};
-
-	const dispatch = useDispatch();
 
 	const addAuthor = (name) => {
 		const newAuthor = { name: name, id: uuidv4() };
@@ -80,7 +77,7 @@ const CreateCourse: React.FC<CreateCourseProps> = (props) => {
 						<Button
 							buttonText='Create course'
 							class='create_course_button'
-							onClick={createCourse}
+							onClick={() => dispatch(createCourse(newCourse))}
 							type='submit'
 							disabled={!isEnabled()}
 						/>

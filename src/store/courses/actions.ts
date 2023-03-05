@@ -2,7 +2,7 @@ import axios from 'axios';
 
 //synchronous action creator
 const fetchCoursesSuccess = (courses) => ({
-	type: 'FETCH_COURSES_SUCCESS',
+	type: 'GET_COURSES',
 	payload: courses,
 });
 
@@ -17,5 +17,12 @@ export const fetchCourses = () => {
 		} catch (e) {
 			console.log(e);
 		}
+	};
+};
+
+export const createCourse = (courseData) => {
+	return {
+		type: 'ADD_COURSE',
+		payload: courseData,
 	};
 };

@@ -4,20 +4,17 @@ const coursesInitialState = [];
 
 const coursesReducer = (state: coursesState = coursesInitialState, action) => {
 	switch (action.type) {
-		case 'FETCH_COURSES_SUCCESS':
+		case 'GET_COURSES':
 			return action.payload;
 		case 'ADD_COURSE':
 			console.log('add course');
-			break;
+			return [...state, action.payload];
 		case 'DELETE_COURSE':
 			console.log('delete course');
-			break;
+			return state;
 		case 'UPDATE_COURSE':
 			console.log('update course');
-			break;
-		case 'GET_COURSES':
-			console.log('get courses');
-			break;
+			return state;
 		default: {
 			return state; // We return the default state here
 		}

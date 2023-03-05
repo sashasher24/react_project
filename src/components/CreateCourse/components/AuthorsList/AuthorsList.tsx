@@ -1,7 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import AuthorItem from '../AuthorItem/AuthorItem';
-import { AnyAction } from 'redux';
 import { addCourseAuthor } from '../../../../store/courseAuthors/actions';
 
 export interface Author {
