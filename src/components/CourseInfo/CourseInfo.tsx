@@ -1,22 +1,26 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
 import Button from '../../common/Button/Button';
 import { getAuthors } from '../../helpers/getAuthors';
 import { getCourseDuration } from '../../helpers/getCourseDuration';
-import { CourseCardProps } from '../Courses/components/CourseCard/CourseCard';
-import { Author } from '../CreateCourse/components/AuthorsList/AuthorsList';
+import { authorsState } from '../../store/authors/types';
+import { coursesState } from '../../store/courses/types';
 
 import './CourseInfo.css';
 
-interface courseInfoProps {
-	courses: CourseCardProps[];
-	authors: Author[];
-}
-
-const CourseInfo: React.FC<courseInfoProps> = ({ courses, authors }) => {
+const CourseInfo: React.FC = () => {
 	const { courseId } = useParams();
 
+	const courses = useSelector(
+		(state: { courses: coursesState }) => state.courses
+	);
+	const authors = useSelector(
+		(state: { authors: authorsState }) => state.authors
+	);
+
 	const course = courses.find((el) => el.id === courseId);
+	console.log(course);
 
 	return (
 		<div className='course_info_block'>

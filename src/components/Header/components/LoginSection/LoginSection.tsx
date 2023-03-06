@@ -4,22 +4,24 @@ import Button from '../../../../common/Button/Button';
 
 import './LoginSection.css';
 import { Link } from 'react-router-dom';
+import { logout } from '../../../../store/user/actions';
+import { useDispatch } from 'react-redux/es/hooks/useDispatch';
+import { useSelector } from 'react-redux';
+import { userState } from '../../../../store/user/types';
 
-interface LoginSectionProps {
-	isLoggedIn: boolean;
-	userName: string;
-	logOutFunction: () => void;
-}
+const LoginSection: React.FC = () => {
+	const dispatch = useDispatch();
 
-const LoginSection: React.FC<LoginSectionProps> = (props) => {
+	const user = useSelector((state: { user: userState }) => state.user);
+
 	return (
 		<div className='header_login_section'>
-			{props.isLoggedIn && <UserName name={props.userName} />}
+			{user.isAuth && <UserName name={user.name} />}
 			<Link to={'/login'}>
 				<Button
-					buttonText={props.isLoggedIn ? 'Log Out' : 'Log In'}
+					buttonText={user.isAuth ? 'Log Out' : 'Log In'}
 					class='header_login_button'
-					onClick={props.isLoggedIn && props.logOutFunction}
+					onClick={() => dispatch(logout())}
 				/>
 			</Link>
 		</div>

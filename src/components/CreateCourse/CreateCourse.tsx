@@ -1,47 +1,47 @@
-import React, { Dispatch, SetStateAction, useState } from 'react';
+import React, { useState } from 'react';
 import Input from '../../common/Input/Input';
 import Button from '../../common/Button/Button';
 import { v4 as uuidv4 } from 'uuid';
 
 import './CreateCourse.css';
 import { getCourseDuration } from '../../helpers/getCourseDuration';
-import AuthorsList, { Author } from './components/AuthorsList/AuthorsList';
+import AuthorsList from './components/AuthorsList/AuthorsList';
 import CourseAuthorsList from './components/CourseAuthorsList/CourseAuthorsList';
-import { CourseCardProps } from '../Courses/components/CourseCard/CourseCard';
 import { formatCreationDate } from '../../helpers/formatCreationDate';
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { authorsState } from '../../store/authors/types';
+import { createAuthor } from '../../store/authors/actions';
+import { createCourse } from '../../store/courses/actions';
+import { clearCourseAuthors } from '../../store/courseAuthors/actions';
 
-interface CreateCourseProps {
-	setCourses: Dispatch<SetStateAction<CourseCardProps[]>>;
-	courses: CourseCardProps[];
-	authors: Author[];
-	setAuthors: Dispatch<SetStateAction<Author[]>>;
-}
-const CreateCourse: React.FC<CreateCourseProps> = (props) => {
+const CreateCourse: React.FC = () => {
 	const [name, setName] = useState('');
-	const [courseAuthors, setCourseAuthors] = useState([]);
 	const [duration, setDuration] = useState(0);
-
 	const [courseTitle, setCourseTitle] = useState('');
 	const [courseDescription, setCourseDescription] = useState('');
 
-	const createCourse = () => {
-		const newCourses = [...props.courses];
-		newCourses.push({
-			id: uuidv4(),
-			title: courseTitle,
-			description: courseDescription,
-			creationDate: formatCreationDate(new Date()),
-			duration: duration,
-			authors: courseAuthors.map((author) => author.id),
-		});
-		props.setCourses(newCourses);
+	const dispatch = useDispatch();
+
+	const authors = useSelector(
+		(state: { authors: authorsState }) => state.authors
+	);
+	const courseAuthors = useSelector(
+		(state: { courseAuthors: authorsState }) => state.courseAuthors
+	);
+
+	const newCourse = {
+		id: uuidv4(),
+		title: courseTitle,
+		description: courseDescription,
+		creationDate: formatCreationDate(new Date()),
+		duration: duration,
+		authors: courseAuthors.map((author) => author.id),
 	};
 
-	const addAuthors = (newName) => {
-		const newAuthors = [...props.authors];
-		if (newName.length >= 2) newAuthors.push({ id: uuidv4(), name: newName });
-		props.setAuthors(newAuthors);
+	const addAuthor = (name) => {
+		const newAuthor = { name: name, id: uuidv4() };
+		dispatch(createAuthor(newAuthor));
 		setName('');
 	};
 
@@ -72,7 +72,10 @@ const CreateCourse: React.FC<CreateCourseProps> = (props) => {
 						<Button
 							buttonText='Create course'
 							class='create_course_button'
-							onClick={createCourse}
+							onClick={() => {
+								dispatch(createCourse(newCourse));
+								dispatch(clearCourseAuthors());
+							}}
 							type='submit'
 							disabled={!isEnabled()}
 						/>
@@ -106,7 +109,7 @@ const CreateCourse: React.FC<CreateCourseProps> = (props) => {
 							<Button
 								buttonText='Create author'
 								class='create_author_button'
-								onClick={() => addAuthors(name)}
+								onClick={() => addAuthor(name)}
 							/>
 						</div>
 						<div className='create_course_add_duration block main_info_block'>
@@ -127,15 +130,8 @@ const CreateCourse: React.FC<CreateCourseProps> = (props) => {
 						</div>
 					</div>
 					<div className='create_course_right_info_block'>
-						<AuthorsList
-							authors={props.authors}
-							setCourseAuthors={setCourseAuthors}
-							courseAuthors={courseAuthors}
-						/>
-						<CourseAuthorsList
-							authors={courseAuthors}
-							setCourseAuthors={setCourseAuthors}
-						/>
+						<AuthorsList authors={authors} />
+						<CourseAuthorsList authors={courseAuthors} />
 					</div>
 				</div>
 			</div>

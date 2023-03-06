@@ -4,8 +4,10 @@ import './CourseCard.css';
 import Button from '../../../../common/Button/Button';
 import { getAuthors } from '../../../../helpers/getAuthors';
 import { getCourseDuration } from '../../../../helpers/getCourseDuration';
-import { Author } from '../../../CreateCourse/components/AuthorsList/AuthorsList';
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { authorsState } from '../../../../store/authors/types';
+import { deleteCourse } from '../../../../store/courses/actions';
 
 export interface CourseCardProps {
 	id?: string;
@@ -18,9 +20,14 @@ export interface CourseCardProps {
 
 interface CourseCard {
 	card: CourseCardProps;
-	authors: Author[];
 }
-const CourseCard: React.FC<CourseCard> = ({ card, authors }) => {
+const CourseCard: React.FC<CourseCard> = ({ card }) => {
+	const authors = useSelector(
+		(state: { authors: authorsState }) => state.authors
+	);
+
+	const dispatch = useDispatch();
+
 	const displayAuthors = (): string => {
 		const maxLength = 46;
 		const result =
@@ -52,9 +59,17 @@ const CourseCard: React.FC<CourseCard> = ({ card, authors }) => {
 					<span className='course_card_details_name'>Creation: </span>
 					{card.creationDate}
 				</p>
-				<Link to={`/courses/${card.id}`}>
-					<Button buttonText='Show course' class='show_course_button' />
-				</Link>
+				<div className='course_card_buttons'>
+					<Link to={`/courses/${card.id}`}>
+						<Button buttonText='Show course' class='show_course_button' />
+					</Link>
+					<Button
+						buttonText='Delete course'
+						class='show_course_button'
+						onClick={() => dispatch(deleteCourse(card))}
+					/>
+					<Button buttonText='Edit course' class='show_course_button' />
+				</div>
 			</div>
 		</div>
 	);

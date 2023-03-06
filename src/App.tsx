@@ -2,27 +2,30 @@ import React, { useEffect, useState } from 'react';
 import './App.css';
 import Header from './components/Header/Header';
 import Courses from './components/Courses/Courses';
-import { mockedAuthorsList, mockedCoursesList } from './constants';
 import CreateCourse from './components/CreateCourse/CreateCourse';
 import Registration from './components/Registration/Registration';
 import Login from './components/Login/Login';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import CourseInfo from './components/CourseInfo/CourseInfo';
+import { useSelector } from 'react-redux/es/exports';
+import { userState } from './store/user/types';
+import { coursesState } from './store/courses/types';
 
 function App() {
 	const navigate = useNavigate();
 	const [isFiltered, setIsFiltered] = useState(false);
 	const [filterValue, setFilterValue] = useState('');
 	const [filteredCourses, setFilteredCourses] = useState([]);
-	const [courses, setCourses] = useState(mockedCoursesList);
-	const [authors, setAuthors] = useState(mockedAuthorsList);
 
-	const [isLoggedIn, setIsLoggedIn] = useState(
-		localStorage.getItem('token') !== null
+	const user = useSelector((state: { user: userState }) => state.user);
+	console.log(user);
+
+	const courses = useSelector(
+		(state: { courses: coursesState }) => state.courses
 	);
-	const [userName, setUserName] = useState('');
 
 	const filterCourses = (value) => {
+		// TODO: fix/update/refactor filtering (search)
 		let filtered = courses;
 		setIsFiltered(true);
 		if (value === '') {
@@ -37,53 +40,28 @@ function App() {
 	};
 
 	useEffect(() => {
-		isLoggedIn ? navigate('/courses') : navigate('/login');
-	}, [isLoggedIn]);
+		user.isAuth ? navigate('/courses') : navigate('/login');
+	}, [user]);
 
 	return (
 		<>
-			<Header
-				isLoggedIn={isLoggedIn}
-				setIsLoggedIn={setIsLoggedIn}
-				userName={userName}
-				setUserName={setUserName}
-			/>
+			<Header />
 			<main>
 				<Routes>
 					<Route path='/registration' element={<Registration />} />
-					<Route
-						path='/login'
-						element={
-							<Login setIsLoggedIn={setIsLoggedIn} setUserName={setUserName} />
-						}
-					/>
-					<Route
-						path='/courses/:courseId'
-						element={<CourseInfo courses={courses} authors={authors} />}
-					/>
+					<Route path='/login' element={<Login />} />
+					<Route path='/courses/:courseId' element={<CourseInfo />} />
 					<Route
 						path='/courses'
 						element={
 							<Courses
-								courses={isFiltered ? filteredCourses : courses}
 								filterCourses={filterCourses}
 								filterValue={filterValue}
 								setFilterValue={setFilterValue}
-								authors={authors}
 							/>
 						}
 					/>
-					<Route
-						path='/courses/add'
-						element={
-							<CreateCourse
-								setCourses={setCourses}
-								courses={courses}
-								authors={authors}
-								setAuthors={setAuthors}
-							/>
-						}
-					/>
+					<Route path='/courses/add' element={<CreateCourse />} />
 				</Routes>
 			</main>
 		</>

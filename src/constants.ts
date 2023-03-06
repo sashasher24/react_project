@@ -47,3 +47,5 @@ export const mockedAuthorsList = [
 		name: 'Valentina Larina',
 	},
 ];
+
+export const savedToken = localStorage.getItem('token');
