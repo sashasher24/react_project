@@ -11,3 +11,9 @@ export const deleteCourseAuthor = (authorData) => {
 		payload: authorData,
 	};
 };
+
+export const clearCourseAuthors = () => {
+	return {
+		type: 'CLEAR_COURSE_AUTHORS',
+	};
+};

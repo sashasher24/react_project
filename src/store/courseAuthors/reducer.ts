@@ -19,6 +19,8 @@ const courseAuthorsReducer = (
 			authors.splice(index, 1);
 			return authors;
 		}
+		case 'CLEAR_COURSE_AUTHORS':
+			return courseAuthorsInitialState;
 		default: {
 			return state; // We return the default state here
 		}

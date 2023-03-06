@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { authorsState } from '../../store/authors/types';
 import { createAuthor } from '../../store/authors/actions';
 import { createCourse } from '../../store/courses/actions';
+import { clearCourseAuthors } from '../../store/courseAuthors/actions';
 
 const CreateCourse: React.FC = () => {
 	const [name, setName] = useState('');
@@ -71,7 +72,10 @@ const CreateCourse: React.FC = () => {
 						<Button
 							buttonText='Create course'
 							class='create_course_button'
-							onClick={() => dispatch(createCourse(newCourse))}
+							onClick={() => {
+								dispatch(createCourse(newCourse));
+								dispatch(clearCourseAuthors());
+							}}
 							type='submit'
 							disabled={!isEnabled()}
 						/>
