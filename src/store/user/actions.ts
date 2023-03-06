@@ -1,10 +1,9 @@
-import { UserCredentials } from '../../components/Login/Login';
 import { NewUser } from '../../components/Registration/Registration';
 
-export const logIn = (credentials: UserCredentials) => {
+export const logIn = (response) => {
 	return {
 		type: 'LOGIN',
-		payload: credentials,
+		payload: response,
 	};
 };
 

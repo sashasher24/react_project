@@ -12,14 +12,12 @@ const courseAuthorsReducer = (
 			return state.includes(action.payload)
 				? state
 				: [...state, action.payload];
-			break;
 		case 'DELETE_COURSE_AUTHOR': {
 			console.log('delete course author');
 			const authors = [...state];
 			const index = authors.indexOf(action.payload);
 			authors.splice(index, 1);
 			return authors;
-			break;
 		}
 		default: {
 			return state; // We return the default state here

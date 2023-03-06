@@ -16,7 +16,7 @@ const LoginSection: React.FC = () => {
 
 	return (
 		<div className='header_login_section'>
-			{user.isAuth && <UserName name={localStorage.getItem('userName')} />}
+			{user.isAuth && <UserName name={user.name} />}
 			<Link to={'/login'}>
 				<Button
 					buttonText={user.isAuth ? 'Log Out' : 'Log In'}

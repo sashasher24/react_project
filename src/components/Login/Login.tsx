@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import Button from '../../common/Button/Button';
 import Input from '../../common/Input/Input';
+import { postLogin } from '../../services';
 import { logIn } from '../../store/user/actions';
 
 import './Login.css';
@@ -19,13 +20,14 @@ const Login: React.FC = () => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 
-	function handleSubmit(event) {
+	async function handleSubmit(event) {
 		const userCredentials: UserCredentials = {
 			email: email,
 			password: password,
 		};
 		event.preventDefault();
-		dispatch(logIn(userCredentials));
+		const response = await postLogin(userCredentials);
+		dispatch(logIn(response));
 		navigate('/courses');
 	}
 

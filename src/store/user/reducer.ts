@@ -1,11 +1,12 @@
 import { userState } from './types';
-import axios from 'axios';
+import { savedToken } from '../../constants';
+import { postRegister } from '../../services';
 
 const userInitialState: userState = {
-	isAuth: localStorage.getItem('token') !== null,
+	isAuth: savedToken !== null,
 	name: '',
 	email: '',
-	token: localStorage.getItem('token') ? localStorage.getItem('token') : '',
+	token: savedToken ? savedToken : '',
 };
 
 const userReducer = (
@@ -16,23 +17,12 @@ const userReducer = (
 
 	switch (action.type) {
 		case 'LOGIN':
-			axios
-				.post('http://localhost:4000/login', action.payload)
-				.then((response) => {
-					newUser.isAuth = true;
-					newUser.name = response.data.user.name; // not working ??
-					newUser.email = response.data.user.email; // not working ??
-					newUser.token = response.data.result;
-					console.log(response);
-					localStorage.setItem('token', response.data.result);
-					localStorage.setItem('userName', response.data.user.name);
-				})
-				.catch((e) => {
-					alert(e.message);
-					console.log(e.message);
-				});
-			console.log('logIn');
-			console.log(`new user - ${JSON.stringify(newUser)}`);
+			newUser.isAuth = true;
+			newUser.name = action.payload.user.name;
+			newUser.email = action.payload.user.email;
+			newUser.token = action.payload.result;
+			localStorage.setItem('token', action.payload.result);
+			localStorage.setItem('userName', action.payload.user.name);
 			return Object.assign({}, state, newUser);
 		case 'LOGOUT':
 			newUser.isAuth = false;
@@ -44,15 +34,7 @@ const userReducer = (
 			console.log('logOut');
 			return Object.assign({}, state, newUser);
 		case 'REGISTER':
-			axios
-				.post('http://localhost:4000/register', action.payload)
-				.then((response) => {
-					console.log(response);
-				})
-				.catch((e) => {
-					alert(e.message);
-					console.log(e.message);
-				});
+			postRegister(action.payload);
 			return state;
 		default: {
 			return state; // return the default state here
