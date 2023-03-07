@@ -3,7 +3,7 @@ import Input from '../../common/Input/Input';
 import Button from '../../common/Button/Button';
 import { v4 as uuidv4 } from 'uuid';
 
-import './CreateCourse.css';
+import './CourseForm.css';
 import { getCourseDuration } from '../../helpers/getCourseDuration';
 import AuthorsList from './components/AuthorsList/AuthorsList';
 import CourseAuthorsList from './components/CourseAuthorsList/CourseAuthorsList';
