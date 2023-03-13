@@ -7,7 +7,10 @@ import { getCourseDuration } from '../../../../helpers/getCourseDuration';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { authorsState } from '../../../../store/authors/types';
-import { deleteCourse } from '../../../../store/courses/actions';
+// import { deleteCourse } from '../../../../store/courses/actions';
+import { userState } from '../../../../store/user/types';
+import { delCourse } from '../../../../store/courses/thunk';
+import { store } from '../../../../store';
 
 export interface CourseCardProps {
 	id?: string;
@@ -25,6 +28,7 @@ const CourseCard: React.FC<CourseCard> = ({ card }) => {
 	const authors = useSelector(
 		(state: { authors: authorsState }) => state.authors
 	);
+	const user = useSelector((state: { user: userState }) => state.user);
 
 	const dispatch = useDispatch();
 
@@ -63,12 +67,18 @@ const CourseCard: React.FC<CourseCard> = ({ card }) => {
 					<Link to={`/courses/${card.id}`}>
 						<Button buttonText='Show course' class='show_course_button' />
 					</Link>
-					<Button
-						buttonText='Delete course'
-						class='show_course_button'
-						onClick={() => dispatch(deleteCourse(card))}
-					/>
-					<Button buttonText='Edit course' class='show_course_button' />
+					{user.role === 'admin' && (
+						<div className='course_card_buttons'>
+							<Button
+								buttonText='Delete course'
+								class='show_course_button'
+								onClick={() => store.dispatch(delCourse(card.id))}
+							/>
+							<Link to={`/courses/update/${card.id}`}>
+								<Button buttonText='Edit course' class='show_course_button' />
+							</Link>
+						</div>
+					)}
 				</div>
 			</div>
 		</div>

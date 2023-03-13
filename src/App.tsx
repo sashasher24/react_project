@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './App.css';
 import Header from './components/Header/Header';
 import Courses from './components/Courses/Courses';
-import CreateCourse from './components/CreateCourse/CreateCourse';
+import CreateCourse from './components/CreateCourse/CourseForm';
 import Registration from './components/Registration/Registration';
 import Login from './components/Login/Login';
 import { Route, Routes, useNavigate } from 'react-router-dom';
@@ -51,6 +51,7 @@ function App() {
 					<Route path='/registration' element={<Registration />} />
 					<Route path='/login' element={<Login />} />
 					<Route path='/courses/:courseId' element={<CourseInfo />} />
+					<Route path='/courses/update/:courseId' element={<CourseInfo />} />
 					<Route
 						path='/courses'
 						element={

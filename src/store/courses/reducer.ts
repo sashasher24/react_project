@@ -11,6 +11,7 @@ const coursesReducer = (state: coursesState = coursesInitialState, action) => {
 			return [...state, action.payload];
 		case 'DELETE_COURSE': {
 			console.log('delete course');
+			console.log(action.payload);
 			const courses = [...state];
 			const index = courses.indexOf(action.payload);
 			courses.splice(index, 1);

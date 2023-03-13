@@ -11,9 +11,9 @@ export const createCourse = (courseData) => {
 	};
 };
 
-export const deleteCourse = (courseData) => {
+export const deleteCourseSuccess = (courses) => {
 	return {
 		type: 'DELETE_COURSE',
-		payload: courseData,
+		payload: courses,
 	};
 };

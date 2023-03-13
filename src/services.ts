@@ -1,32 +1,26 @@
 import axios from 'axios';
 import { UserCredentials } from './components/Login/Login';
 import { NewUser } from './components/Registration/Registration';
-import { fetchAuthorsSuccess } from './store/authors/actions';
-import { fetchCoursesSuccess } from './store/courses/actions';
+import { savedToken } from './constants';
 
-/*asynchronous thunk action creator
-  calls the api, then dispatches the synchronous action creator
-*/
-export const fetchCourses = () => {
-	return async (dispatch) => {
-		try {
-			const posts = await axios.get('http://localhost:4000/courses/all');
-			dispatch(fetchCoursesSuccess(posts.data.result)); //courses
-		} catch (e) {
-			console.log(e);
-		}
-	};
+export const getAllCourses = async () => {
+	try {
+		const { data } = await axios.get('http://localhost:4000/courses/all');
+		return data.result;
+	} catch (e) {
+		alert(e.message);
+		console.log(e.message);
+	}
 };
 
-export const fetchAuthors = () => {
-	return async (dispatch) => {
-		try {
-			const posts = await axios.get('http://localhost:4000/authors/all');
-			dispatch(fetchAuthorsSuccess(posts.data.result)); //authors
-		} catch (e) {
-			console.log(e);
-		}
-	};
+export const getAllAuthors = async () => {
+	try {
+		const authors = await axios.get('http://localhost:4000/authors/all');
+		return authors.data.result;
+	} catch (e) {
+		alert(e.message);
+		console.log(e.message);
+	}
 };
 
 export const postLogin = async (UserCredentials: UserCredentials) => {
@@ -47,6 +41,48 @@ export const postRegister = async (credentials: NewUser) => {
 		.post('http://localhost:4000/register', credentials)
 		.then((response) => {
 			console.log(response);
+		})
+		.catch((e) => {
+			alert(e.message);
+			console.log(e.message);
+		});
+};
+
+export const getMe = async () => {
+	try {
+		const { data } = await axios.get('http://localhost:4000/users/me', {
+			headers: {
+				Authorization: savedToken,
+			},
+		});
+		return data.result;
+	} catch (e) {
+		alert(e.message);
+		console.log(e.message);
+	}
+};
+
+export const deleteUser = async () => {
+	await axios
+		.delete('http://localhost:4000/logout', {
+			headers: {
+				Authorization: savedToken,
+			},
+		})
+		.then((response) => {
+			console.log(response);
+		})
+		.catch((e) => {
+			alert(e.message);
+			console.log(e.message);
+		});
+};
+
+export const deleteCourse = async (courseId: string) => {
+	await axios
+		.delete(`http://localhost:4000/courses/${courseId}`) //TODO: check if the request is correct
+		.then((response) => {
+			console.log(`delete course - ${response}`);
 		})
 		.catch((e) => {
 			alert(e.message);

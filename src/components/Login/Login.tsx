@@ -5,6 +5,7 @@ import Button from '../../common/Button/Button';
 import Input from '../../common/Input/Input';
 import { postLogin } from '../../services';
 import { logIn } from '../../store/user/actions';
+import { getCurrentUser } from '../../store/user/thunk';
 
 import './Login.css';
 
@@ -20,7 +21,7 @@ const Login: React.FC = () => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 
-	async function handleSubmit(event) {
+	const handleSubmit = async (event) => {
 		const userCredentials: UserCredentials = {
 			email: email,
 			password: password,
@@ -28,8 +29,10 @@ const Login: React.FC = () => {
 		event.preventDefault();
 		const response = await postLogin(userCredentials);
 		dispatch(logIn(response));
+		// TODO: doesn't work, fix so that we can get users role with login
+		// dispatch(getCurrentUser());
 		navigate('/courses');
-	}
+	};
 
 	return (
 		<form className='login_form' onSubmit={handleSubmit}>

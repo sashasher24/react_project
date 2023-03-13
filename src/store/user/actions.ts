@@ -19,3 +19,10 @@ export const register = (credentials: NewUser) => {
 		payload: credentials,
 	};
 };
+
+export const getUserSuccess = (payload) => {
+	return {
+		type: 'GET_USER_SUCCESS',
+		payload: payload,
+	};
+};
