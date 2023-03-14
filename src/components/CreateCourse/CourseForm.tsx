@@ -67,7 +67,7 @@ const CourseForm: React.FC = () => {
 		title: courseTitle,
 		description: courseDescription,
 		duration: +duration,
-		// authors: courseAuthors.map((author) => author.id),
+		authors: courseAuthors.map((author) => author.id),
 	};
 
 	const addAuthorClick = (name) => {

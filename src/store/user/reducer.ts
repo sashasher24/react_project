@@ -1,6 +1,5 @@
 import { userState } from './types';
 import { savedToken } from '../../constants';
-import { deleteUser, postRegister } from '../../services';
 
 const userInitialState: userState = {
 	isAuth: savedToken !== null,
@@ -23,8 +22,6 @@ const userReducer = (
 			newUser.email = action.payload.user.email;
 			newUser.token = action.payload.result;
 			newUser.role = action.payload.role ? action.payload.role : 'user';
-			localStorage.setItem('token', action.payload.result);
-			// localStorage.setItem('userName', action.payload.user.name);
 			return Object.assign({}, state, newUser);
 		case 'LOGOUT':
 			newUser.isAuth = false;
@@ -32,13 +29,9 @@ const userReducer = (
 			newUser.email = '';
 			newUser.token = '';
 			newUser.role = '';
-			deleteUser();
-			localStorage.removeItem('token');
-			// localStorage.removeItem('userName');
 			console.log('logOut');
 			return Object.assign({}, state, newUser);
 		case 'REGISTER':
-			postRegister(action.payload);
 			return state;
 		case 'GET_USER_SUCCESS':
 			newUser.name = action.payload.name;

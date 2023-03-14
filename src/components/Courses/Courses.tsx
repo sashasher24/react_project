@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux/es/exports';
 import { coursesState } from '../../store/courses/types';
 import { fetchCourses } from '../../store/courses/thunk';
 import { store } from '../../store';
+import { userState } from '../../store/user/types';
 
 interface CoursesProps {
 	filterCourses: (value: string) => void;
@@ -19,6 +20,7 @@ const Courses: React.FC<CoursesProps> = (props) => {
 	const courses = useSelector(
 		(state: { courses: coursesState }) => state.courses
 	);
+	const user = useSelector((state: { user: userState }) => state.user);
 
 	const dispatch = useDispatch();
 
@@ -34,9 +36,11 @@ const Courses: React.FC<CoursesProps> = (props) => {
 					filterValue={props.filterValue}
 					setFilterValue={props.setFilterValue}
 				/>
-				<Link to='/courses/add'>
-					<Button buttonText='Add new course' class='add_course_button' />
-				</Link>
+				{user.role === 'admin' && (
+					<Link to='/courses/add'>
+						<Button buttonText='Add new course' class='add_course_button' />
+					</Link>
+				)}
 			</div>
 			<div className='main_couses_section-courses'>
 				{!courses ? (

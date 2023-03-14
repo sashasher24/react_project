@@ -27,6 +27,7 @@ const Login: React.FC = () => {
 		};
 		event.preventDefault();
 		const response = await postLogin(userCredentials);
+		localStorage.setItem('token', response.result);
 		dispatch(logIn(response));
 		// TODO: doesn't work, fix so that we can get users role with login
 		navigate('/courses');

@@ -8,6 +8,7 @@ import { logout } from '../../../../store/user/actions';
 import { useDispatch } from 'react-redux/es/hooks/useDispatch';
 import { useSelector } from 'react-redux';
 import { userState } from '../../../../store/user/types';
+import { deleteUser } from '../../../../services';
 
 const LoginSection: React.FC = () => {
 	const dispatch = useDispatch();
@@ -21,7 +22,11 @@ const LoginSection: React.FC = () => {
 				<Button
 					buttonText={user.isAuth ? 'Log Out' : 'Log In'}
 					class='header_login_button'
-					onClick={() => dispatch(logout())}
+					onClick={() => {
+						dispatch(logout());
+						deleteUser();
+						localStorage.removeItem('token');
+					}}
 				/>
 			</Link>
 		</div>
