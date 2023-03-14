@@ -41,6 +41,7 @@ const Input: React.FC<InputProps> = ({
 					id={id ? id : 'input_without_label'}
 					onChange={onChangeTextArea}
 					required={required}
+					value={value}
 				/>
 			) : (
 				<input

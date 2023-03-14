@@ -5,7 +5,6 @@ import Button from '../../common/Button/Button';
 import Input from '../../common/Input/Input';
 import { postLogin } from '../../services';
 import { logIn } from '../../store/user/actions';
-import { getCurrentUser } from '../../store/user/thunk';
 
 import './Login.css';
 
@@ -30,7 +29,6 @@ const Login: React.FC = () => {
 		const response = await postLogin(userCredentials);
 		dispatch(logIn(response));
 		// TODO: doesn't work, fix so that we can get users role with login
-		// dispatch(getCurrentUser());
 		navigate('/courses');
 	};
 

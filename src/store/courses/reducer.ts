@@ -8,17 +8,16 @@ const coursesReducer = (state: coursesState = coursesInitialState, action) => {
 			return action.payload;
 		case 'ADD_COURSE':
 			console.log('add course');
-			return [...state, action.payload];
+			return state;
 		case 'DELETE_COURSE': {
 			console.log('delete course');
-			console.log(action.payload);
-			const courses = [...state];
-			const index = courses.indexOf(action.payload);
-			courses.splice(index, 1);
-			return courses;
+			return state;
 		}
 		case 'UPDATE_COURSE':
 			console.log('update course');
+			return state;
+		case 'GET_COURSE':
+			console.log('get course');
 			return state;
 		default: {
 			return state; // We return the default state here

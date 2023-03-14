@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Input from '../../common/Input/Input';
 import Button from '../../common/Button/Button';
 import { v4 as uuidv4 } from 'uuid';
@@ -8,20 +8,43 @@ import { getCourseDuration } from '../../helpers/getCourseDuration';
 import AuthorsList from './components/AuthorsList/AuthorsList';
 import CourseAuthorsList from './components/CourseAuthorsList/CourseAuthorsList';
 import { formatCreationDate } from '../../helpers/formatCreationDate';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { authorsState } from '../../store/authors/types';
-import { createAuthor } from '../../store/authors/actions';
-import { createCourse } from '../../store/courses/actions';
 import { clearCourseAuthors } from '../../store/courseAuthors/actions';
+import {
+	createCourse,
+	fetchCourses,
+	updateCourse,
+} from '../../store/courses/thunk';
+import { store } from '../../store';
+import { addAuthor, fetchAuthors } from '../../store/authors/thunk';
 
-const CreateCourse: React.FC = () => {
+const CourseForm: React.FC = () => {
 	const [name, setName] = useState('');
 	const [duration, setDuration] = useState(0);
 	const [courseTitle, setCourseTitle] = useState('');
 	const [courseDescription, setCourseDescription] = useState('');
 
 	const dispatch = useDispatch();
+
+	const { courseId } = useParams();
+	const currentCourse =
+		useSelector((state: { currentCourse }) => state.currentCourse) || '';
+
+	useEffect(() => {
+		store.dispatch(fetchAuthors());
+	}, [dispatch]);
+
+	useEffect(() => {
+		if (courseId) {
+			console.log('tut');
+			setCourseTitle(currentCourse.title || '');
+			console.log(currentCourse.duration);
+			setDuration(currentCourse.duration.toString() || '');
+			setCourseDescription(currentCourse.description || '');
+		}
+	}, []);
 
 	const authors = useSelector(
 		(state: { authors: authorsState }) => state.authors
@@ -35,13 +58,21 @@ const CreateCourse: React.FC = () => {
 		title: courseTitle,
 		description: courseDescription,
 		creationDate: formatCreationDate(new Date()),
-		duration: duration,
+		duration: +duration,
 		authors: courseAuthors.map((author) => author.id),
 	};
 
-	const addAuthor = (name) => {
-		const newAuthor = { name: name, id: uuidv4() };
-		dispatch(createAuthor(newAuthor));
+	const updatedCourse = {
+		title: courseTitle,
+		description: courseDescription,
+		duration: +duration,
+		// authors: courseAuthors.map((author) => author.id),
+	};
+
+	const addAuthorClick = (name) => {
+		const newAuthor = { name: name };
+		store.dispatch(addAuthor(newAuthor));
+		store.dispatch(fetchAuthors());
 		setName('');
 	};
 
@@ -70,11 +101,14 @@ const CreateCourse: React.FC = () => {
 					/>
 					<Link to='/courses'>
 						<Button
-							buttonText='Create course'
+							buttonText={courseId ? 'Update course' : 'Create course'}
 							class='create_course_button'
 							onClick={() => {
-								dispatch(createCourse(newCourse));
+								courseId
+									? store.dispatch(updateCourse(courseId, updatedCourse))
+									: store.dispatch(createCourse(newCourse));
 								dispatch(clearCourseAuthors());
+								store.dispatch(fetchCourses);
 							}}
 							type='submit'
 							disabled={!isEnabled()}
@@ -90,6 +124,7 @@ const CreateCourse: React.FC = () => {
 						id='create_course_description_input'
 						onChangeTextArea={(e) => setCourseDescription(e.target.value)}
 						required={true}
+						value={courseDescription}
 					/>
 				</div>
 				<div className='create_course_main_info'>
@@ -109,7 +144,7 @@ const CreateCourse: React.FC = () => {
 							<Button
 								buttonText='Create author'
 								class='create_author_button'
-								onClick={() => addAuthor(name)}
+								onClick={() => addAuthorClick(name)}
 							/>
 						</div>
 						<div className='create_course_add_duration block main_info_block'>
@@ -139,4 +174,4 @@ const CreateCourse: React.FC = () => {
 	);
 };
 
-export default CreateCourse;
+export default CourseForm;

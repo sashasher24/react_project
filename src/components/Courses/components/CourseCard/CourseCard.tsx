@@ -7,10 +7,10 @@ import { getCourseDuration } from '../../../../helpers/getCourseDuration';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { authorsState } from '../../../../store/authors/types';
-// import { deleteCourse } from '../../../../store/courses/actions';
 import { userState } from '../../../../store/user/types';
-import { delCourse } from '../../../../store/courses/thunk';
+import { delCourse, fetchCourses } from '../../../../store/courses/thunk';
 import { store } from '../../../../store';
+import { getCourse } from '../../../../store/currentCourse/thunk';
 
 export interface CourseCardProps {
 	id?: string;
@@ -30,8 +30,6 @@ const CourseCard: React.FC<CourseCard> = ({ card }) => {
 	);
 	const user = useSelector((state: { user: userState }) => state.user);
 
-	const dispatch = useDispatch();
-
 	const displayAuthors = (): string => {
 		const maxLength = 46;
 		const result =
@@ -40,6 +38,12 @@ const CourseCard: React.FC<CourseCard> = ({ card }) => {
 				  '...'
 				: getAuthors(card.authors, authors);
 		return result;
+	};
+
+	const onDeleteCourse = (courseId: string) => {
+		//TODO: deletes course but still shows it till refresh
+		store.dispatch(delCourse(courseId));
+		store.dispatch(fetchCourses());
 	};
 
 	return (
@@ -72,10 +76,14 @@ const CourseCard: React.FC<CourseCard> = ({ card }) => {
 							<Button
 								buttonText='Delete course'
 								class='show_course_button'
-								onClick={() => store.dispatch(delCourse(card.id))}
+								onClick={() => onDeleteCourse(card.id)}
 							/>
 							<Link to={`/courses/update/${card.id}`}>
-								<Button buttonText='Edit course' class='show_course_button' />
+								<Button
+									buttonText='Edit course'
+									class='show_course_button'
+									onClick={() => store.dispatch(getCourse(card.id))}
+								/>
 							</Link>
 						</div>
 					)}

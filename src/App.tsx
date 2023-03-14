@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './App.css';
 import Header from './components/Header/Header';
 import Courses from './components/Courses/Courses';
-import CreateCourse from './components/CreateCourse/CourseForm';
+import CourseForm from './components/CreateCourse/CourseForm';
 import Registration from './components/Registration/Registration';
 import Login from './components/Login/Login';
 import { Route, Routes, useNavigate } from 'react-router-dom';
@@ -10,6 +10,7 @@ import CourseInfo from './components/CourseInfo/CourseInfo';
 import { useSelector } from 'react-redux/es/exports';
 import { userState } from './store/user/types';
 import { coursesState } from './store/courses/types';
+import { PrivateRoute } from './components/PrivateRoute/PrivateRoute';
 
 function App() {
 	const navigate = useNavigate();
@@ -51,7 +52,14 @@ function App() {
 					<Route path='/registration' element={<Registration />} />
 					<Route path='/login' element={<Login />} />
 					<Route path='/courses/:courseId' element={<CourseInfo />} />
-					<Route path='/courses/update/:courseId' element={<CourseInfo />} />
+					<Route
+						path='/courses/update/:courseId'
+						element={
+							<PrivateRoute>
+								<CourseForm />
+							</PrivateRoute>
+						}
+					/>
 					<Route
 						path='/courses'
 						element={
@@ -62,7 +70,14 @@ function App() {
 							/>
 						}
 					/>
-					<Route path='/courses/add' element={<CreateCourse />} />
+					<Route
+						path='/courses/add'
+						element={
+							<PrivateRoute>
+								<CourseForm />
+							</PrivateRoute>
+						}
+					/>
 				</Routes>
 			</main>
 		</>

@@ -4,10 +4,9 @@ export const fetchCoursesSuccess = (courses) => ({
 	payload: courses,
 });
 
-export const createCourse = (courseData) => {
+export const createCourseSuccess = () => {
 	return {
 		type: 'ADD_COURSE',
-		payload: courseData,
 	};
 };
 
@@ -15,5 +14,17 @@ export const deleteCourseSuccess = (courses) => {
 	return {
 		type: 'DELETE_COURSE',
 		payload: courses,
+	};
+};
+
+export const getCourseSuccess = () => {
+	return {
+		type: 'GET_COURSE',
+	};
+};
+
+export const updateCourseSuccess = () => {
+	return {
+		type: 'UPDATE_COURSE',
 	};
 };

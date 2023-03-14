@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { UserCredentials } from './components/Login/Login';
 import { NewUser } from './components/Registration/Registration';
-import { savedToken } from './constants';
 
 export const getAllCourses = async () => {
 	try {
@@ -52,7 +51,7 @@ export const getMe = async () => {
 	try {
 		const { data } = await axios.get('http://localhost:4000/users/me', {
 			headers: {
-				Authorization: savedToken,
+				Authorization: localStorage.getItem('token'),
 			},
 		});
 		return data.result;
@@ -66,7 +65,7 @@ export const deleteUser = async () => {
 	await axios
 		.delete('http://localhost:4000/logout', {
 			headers: {
-				Authorization: savedToken,
+				Authorization: localStorage.getItem('token'),
 			},
 		})
 		.then((response) => {
@@ -80,7 +79,11 @@ export const deleteUser = async () => {
 
 export const deleteCourse = async (courseId: string) => {
 	await axios
-		.delete(`http://localhost:4000/courses/${courseId}`) //TODO: check if the request is correct
+		.delete(`http://localhost:4000/courses/${courseId}`, {
+			headers: {
+				Authorization: localStorage.getItem('token'),
+			},
+		}) //TODO: check if the request is correct
 		.then((response) => {
 			console.log(`delete course - ${response}`);
 		})
@@ -88,4 +91,70 @@ export const deleteCourse = async (courseId: string) => {
 			alert(e.message);
 			console.log(e.message);
 		});
+};
+
+export const addCourseRequest = async (newCourseData) => {
+	try {
+		const response = await axios.post(
+			'http://localhost:4000/courses/add',
+			newCourseData,
+			{
+				headers: {
+					Authorization: localStorage.getItem('token'),
+				},
+			}
+		);
+		return response;
+	} catch (e) {
+		alert(e.message);
+		console.log(e.message);
+	}
+};
+
+export const putCourseRequest = async (courseId, updatedData) => {
+	try {
+		const response = await axios.put(
+			`http://localhost:4000/courses/${courseId}`,
+			updatedData,
+			{
+				headers: {
+					Authorization: localStorage.getItem('token'),
+				},
+			}
+		);
+		return response;
+	} catch (e) {
+		alert(e.message);
+		console.log(e.message);
+	}
+};
+
+export const addAuthorRequest = async (authorData) => {
+	try {
+		const response = await axios.post(
+			'http://localhost:4000/authors/add',
+			authorData,
+			{
+				headers: {
+					Authorization: localStorage.getItem('token'),
+				},
+			}
+		);
+		return response;
+	} catch (e) {
+		alert(e.message);
+		console.log(e.message);
+	}
+};
+
+export const getCourseRequest = async (courseId: string) => {
+	try {
+		const response = await axios.get(
+			`http://localhost:4000/courses/${courseId}`
+		);
+		return response;
+	} catch (e) {
+		alert(e.message);
+		console.log(e.message);
+	}
 };
