@@ -41,7 +41,8 @@ const CourseForm: React.FC = () => {
 			console.log('tut');
 			setCourseTitle(currentCourse.title || '');
 			console.log(currentCourse.duration);
-			setDuration(currentCourse.duration.toString() || '');
+			//TODO fix duration
+			// setDuration(currentCourse.duration.toString() || '');
 			setCourseDescription(currentCourse.description || '');
 		}
 	}, []);
