@@ -9,6 +9,7 @@
     ],
     "moduleResolution": "node",
     "allowJs": true,
+    "skipLibCheck": true,
   },
   "baseUrl": ".",
   "include":["."],
