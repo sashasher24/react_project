@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import Button from '../../common/Button/Button';
 import Input from '../../common/Input/Input';
+import { postRegister } from '../../services';
 import { register } from '../../store/user/actions';
 
 import './Registration.css';
@@ -29,7 +30,8 @@ const Registration: React.FC = () => {
 			email: email,
 			password: password,
 		};
-		dispatch(register(newUser));
+		dispatch(register());
+		postRegister(newUser);
 		navigate('/login');
 	}
 

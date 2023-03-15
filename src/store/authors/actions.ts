@@ -4,9 +4,8 @@ export const fetchAuthorsSuccess = (authors) => ({
 	payload: authors,
 });
 
-export const createAuthor = (authorData) => {
+export const addAuthorSuccess = () => {
 	return {
 		type: 'CREATE_AUTHOR',
-		payload: authorData,
 	};
 };

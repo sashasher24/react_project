@@ -8,7 +8,7 @@ const authorsReducer = (state: authorsState = authorsInitialState, action) => {
 			return action.payload;
 		case 'CREATE_AUTHOR':
 			console.log('create author');
-			return [...state, action.payload];
+			return state;
 		default: {
 			return state; // We return the default state here
 		}

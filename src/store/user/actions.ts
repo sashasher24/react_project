@@ -1,5 +1,3 @@
-import { NewUser } from '../../components/Registration/Registration';
-
 export const logIn = (response) => {
 	return {
 		type: 'LOGIN',
@@ -13,9 +11,15 @@ export const logout = () => {
 	};
 };
 
-export const register = (credentials: NewUser) => {
+export const register = () => {
 	return {
 		type: 'REGISTER',
-		payload: credentials,
+	};
+};
+
+export const getUserSuccess = (payload) => {
+	return {
+		type: 'GET_USER_SUCCESS',
+		payload: payload,
 	};
 };

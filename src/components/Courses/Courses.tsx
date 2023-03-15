@@ -1,12 +1,15 @@
-import React, { Dispatch, SetStateAction } from 'react';
+import React, { Dispatch, SetStateAction, useEffect } from 'react';
 import CourseCard from './components/CourseCard/CourseCard';
 import SearchBar from './components/SearchBar/SearchBar';
 
 import './Courses.css';
 import Button from '../../common/Button/Button';
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux/es/exports';
+import { useDispatch, useSelector } from 'react-redux/es/exports';
 import { coursesState } from '../../store/courses/types';
+import { fetchCourses } from '../../store/courses/thunk';
+import { store } from '../../store';
+import { userState } from '../../store/user/types';
 
 interface CoursesProps {
 	filterCourses: (value: string) => void;
@@ -17,6 +20,13 @@ const Courses: React.FC<CoursesProps> = (props) => {
 	const courses = useSelector(
 		(state: { courses: coursesState }) => state.courses
 	);
+	const user = useSelector((state: { user: userState }) => state.user);
+
+	const dispatch = useDispatch();
+
+	useEffect(() => {
+		store.dispatch(fetchCourses());
+	}, [dispatch]);
 
 	return (
 		<div className='main_couses_section'>
@@ -26,14 +36,18 @@ const Courses: React.FC<CoursesProps> = (props) => {
 					filterValue={props.filterValue}
 					setFilterValue={props.setFilterValue}
 				/>
-				<Link to='/courses/add'>
-					<Button buttonText='Add new course' class='add_course_button' />
-				</Link>
+				{user.role === 'admin' && (
+					<Link to='/courses/add'>
+						<Button buttonText='Add new course' class='add_course_button' />
+					</Link>
+				)}
 			</div>
 			<div className='main_couses_section-courses'>
-				{courses.map((course) => (
-					<CourseCard card={course} />
-				))}
+				{!courses ? (
+					<p>No courses at the moment ...</p>
+				) : (
+					courses.map((course) => <CourseCard card={course} />)
+				)}
 			</div>
 		</div>
 	);

@@ -7,7 +7,10 @@ import { getCourseDuration } from '../../../../helpers/getCourseDuration';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { authorsState } from '../../../../store/authors/types';
-import { deleteCourse } from '../../../../store/courses/actions';
+import { userState } from '../../../../store/user/types';
+import { delCourse, fetchCourses } from '../../../../store/courses/thunk';
+import { store } from '../../../../store';
+import { getCourse } from '../../../../store/currentCourse/thunk';
 
 export interface CourseCardProps {
 	id?: string;
@@ -25,8 +28,7 @@ const CourseCard: React.FC<CourseCard> = ({ card }) => {
 	const authors = useSelector(
 		(state: { authors: authorsState }) => state.authors
 	);
-
-	const dispatch = useDispatch();
+	const user = useSelector((state: { user: userState }) => state.user);
 
 	const displayAuthors = (): string => {
 		const maxLength = 46;
@@ -36,6 +38,12 @@ const CourseCard: React.FC<CourseCard> = ({ card }) => {
 				  '...'
 				: getAuthors(card.authors, authors);
 		return result;
+	};
+
+	const onDeleteCourse = (courseId: string) => {
+		//TODO: deletes course but still shows it till refresh
+		store.dispatch(delCourse(courseId));
+		store.dispatch(fetchCourses());
 	};
 
 	return (
@@ -63,12 +71,22 @@ const CourseCard: React.FC<CourseCard> = ({ card }) => {
 					<Link to={`/courses/${card.id}`}>
 						<Button buttonText='Show course' class='show_course_button' />
 					</Link>
-					<Button
-						buttonText='Delete course'
-						class='show_course_button'
-						onClick={() => dispatch(deleteCourse(card))}
-					/>
-					<Button buttonText='Edit course' class='show_course_button' />
+					{user.role === 'admin' && (
+						<div className='course_card_buttons'>
+							<Button
+								buttonText='Delete course'
+								class='show_course_button'
+								onClick={() => onDeleteCourse(card.id)}
+							/>
+							<Link to={`/courses/update/${card.id}`}>
+								<Button
+									buttonText='Edit course'
+									class='show_course_button'
+									onClick={() => store.dispatch(getCourse(card.id))}
+								/>
+							</Link>
+						</div>
+					)}
 				</div>
 			</div>
 		</div>

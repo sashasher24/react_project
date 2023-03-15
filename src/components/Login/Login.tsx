@@ -20,16 +20,18 @@ const Login: React.FC = () => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 
-	async function handleSubmit(event) {
+	const handleSubmit = async (event) => {
 		const userCredentials: UserCredentials = {
 			email: email,
 			password: password,
 		};
 		event.preventDefault();
 		const response = await postLogin(userCredentials);
+		localStorage.setItem('token', response.result);
 		dispatch(logIn(response));
+		// TODO: doesn't work, fix so that we can get users role with login
 		navigate('/courses');
-	}
+	};
 
 	return (
 		<form className='login_form' onSubmit={handleSubmit}>
