@@ -1,66 +1,86 @@
-// import { render, screen } from '@testing-library/react'
-// import '@testing-library/jest-dom'
-// import Header from '../Header';
-
 import Header from '../Header';
-// import * as ReactDOM from 'react-dom';
 import React from 'react';
-// import { configureStore } from '@reduxjs/toolkit';
-// // import rootReducer from '../../../store/rootReducer';
+import { configureStore, createStore } from '@reduxjs/toolkit';
+import rootReducer from '../../../store/rootReducer';
 // import thunk from 'redux-thunk';
-// import { Provider } from 'react-redux';
-import { render } from '@testing-library/react';
+import { Provider } from 'react-redux';
+import { render, screen } from '@testing-library/react';
 
-// jest.mock("./api", () => ({
-//     getUserName: () => ({ name: "mock name" })
-//   }));
+// import { mockLocalStorage } from '../../../helpers/mockLocalStorage';
 
-//   const initialState = {
-//     user: {
-//         isAuth: true,
-//         name: "mock name",
-//         email: 'mock email',
-//         token: 'token',
-//         role: 'admin',
-//     },
-// };
+// const { getItemMock, setItemMock } = mockLocalStorage();
 
-// export const store = configureStore({
-// 	middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(thunk),
-// 	initialState,
+const initialState = {
+	user: {
+		isAuth: true,
+		name: 'mock name',
+		email: 'mock email',
+		token: 'token',
+		role: 'admin',
+	},
+};
+
+export const store = createStore(rootReducer, initialState);
+
+const Wrapper = ({ children }) => <Provider store={store}>{children}</Provider>;
+
+// it('fetches something from localStorage', () => {
+//     getItemMock.mockReturnValue('bar');
+//     render(<Component />);
+//     expect(getItemMock).toHaveBeenCalled();
+//     expect(getByText(/bar/i)).toBeInTheDocument()
 // });
 
-// const Wrapper = ({ children }) => (
-//     <Provider store={store}>{children}</Provider>
-// );
+jest.mock('../components/LoginSection/LoginSection', () => ({
+	LoginSection: () => <div data-testId='mock div' />,
+}));
 
-// describe("User", () => {
-//     it("should display user name", async () => {
-//       render(<Header />, { wrapper: Wrapper });
+const localStorageMock = (function () {
+	let store = {};
 
-//       const userName = await screen.findByText("mock name");
+	return {
+		getItem(key) {
+			return store[key];
+		},
 
-//       expect(userName).toBeTruthy();
-//     });
-//   });
+		setItem(key, value) {
+			store[key] = value;
+		},
+
+		clear() {
+			store = {};
+		},
+
+		removeItem(key) {
+			delete store[key];
+		},
+
+		getAll() {
+			return store;
+		},
+	};
+})();
+
+Object.defineProperty(window, 'localStorage', { value: localStorageMock });
+
+const setLocalStorage = (id, data) => {
+	window.localStorage.setItem(id, JSON.stringify(data));
+};
 
 describe('Header component tests', () => {
-	let container;
+	it('correctly renders initial document', async () => {
+		setLocalStorage('token', 'tokenhgdsswghybvg');
+		// getItemMock.mockReturnValue('token');
+		render(<Header />, { wrapper: Wrapper });
+		// expect(getItemMock).toHaveBeenCalled();
 
-	beforeEach(() => {
-		container = document.createElement('div');
-		document.appendChild(container);
-		render(<Header />, container);
-	});
+		const userName = await screen.findByText('mock name');
 
-	afterEach(() => {
-		document.body.removeChild(container);
-		container.remove();
-	});
+		expect(userName).toBeTruthy();
+		// render(<Header />);
 
-	it('correctly renders initial document', () => {
-		const logo = container.getElementsByClassName('header_logo');
-		expect(logo).toHaveLength(1);
+		// // const logo = container.getElementsByClassName('header_logo');
+		// expect(screen.getByText('Test Name')).toBeInTheDocument();	});
 	});
 });
 
@@ -74,25 +94,4 @@ describe('Header component tests', () => {
 
 //         expect(screen.getByTestId("header_logo")).toBeInTheDocument()
 //     })
-// });
-
-// export function divide(x, y) {
-//     if (y === 0) {
-//         throw new Error("You can't divide by zero.");
-//     }
-//     return Math.round(x / y)
-// }
-
-// describe(' divide function', () => {
-//     describe('when given to integers', () => {
-//         it('should return a division result', () => {
-
-//         })
-//     })
-// })
-
-// it("should return a division result", () => {
-//     const [x, y, expected] = [40, 4, 10];
-//     const result = divide(x, y);
-//     expect(result).toEqual(expected);
 // });
