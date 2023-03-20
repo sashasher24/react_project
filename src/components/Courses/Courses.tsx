@@ -12,9 +12,9 @@ import { store } from '../../store';
 import { userState } from '../../store/user/types';
 
 interface CoursesProps {
-	filterCourses: (value: string) => void;
-	filterValue: string;
-	setFilterValue: Dispatch<SetStateAction<string>>;
+	filterCourses?: (value: string) => void;
+	filterValue?: string;
+	setFilterValue?: Dispatch<SetStateAction<string>>;
 }
 const Courses: React.FC<CoursesProps> = (props) => {
 	const courses = useSelector(

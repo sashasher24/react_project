@@ -5,7 +5,7 @@ import Button from '../../../../common/Button/Button';
 import { getAuthors } from '../../../../helpers/getAuthors';
 import { getCourseDuration } from '../../../../helpers/getCourseDuration';
 import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { authorsState } from '../../../../store/authors/types';
 import { userState } from '../../../../store/user/types';
 import { delCourse, fetchCourses } from '../../../../store/courses/thunk';
@@ -47,25 +47,31 @@ const CourseCard: React.FC<CourseCard> = ({ card }) => {
 	};
 
 	return (
-		<div className='course_card'>
+		<div className='course_card' data-testid='course_card'>
 			<div className='course_card_main_info'>
 				<Link to={`/courses/${card.id}`}>
 					<div className='course_card_title'>{card.title}</div>
 				</Link>
-				<div className='course_card_description'>{card.description}</div>
+				<div className='course_card_description' data-testid='card_description'>
+					{card.description}
+				</div>
 			</div>
 			<div className='course_card_details'>
 				<p>
-					<span className='course_card_details_name'>Authors: </span>
+					<span className='course_card_details_name' data-testid='card_authors'>
+						Authors:{' '}
+					</span>
 					{displayAuthors()}
 				</p>
 				<p>
 					<span className='course_card_details_name'>Duration: </span>
-					{getCourseDuration(card.duration)}
+					<span data-testid='card_duration'>
+						{getCourseDuration(card.duration)}
+					</span>
 				</p>
 				<p>
 					<span className='course_card_details_name'>Creation: </span>
-					{card.creationDate}
+					<span data-testid='card_creation'>{card.creationDate}</span>
 				</p>
 				<div className='course_card_buttons'>
 					<Link to={`/courses/${card.id}`}>
